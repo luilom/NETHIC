@@ -1,0 +1,21 @@
+{
+  "pets" : [ "animal_welfare", "birds", "cats", "dogs", "fish", "reptiles", "zoo" ],
+  "automotive_and_vehicles" : [ "bicycles_and_accessories", "boats_and_watercraft", "campers_and_rvs", "cars", "electric_vehicles", "minivan", "motor_shows", "motorcycles" ],
+  "govt_and_politics" : [ "espionage_and_intelligence", "government", "immigration", "law_enforcement", "politics" ],
+  "home_and_garden" : [ "appliances", "bed", "gardening_and_landscaping", "home_improvement", "homes", "interior_design" ],
+  "education" : [ "adult_education", "language_learning", "school", "teaching" ],
+  "family_and_parenting" : [ "adoption", "children", "eldercare", "family", "motherhood", "parenting_teens" ],
+  "technology_and_computing" : [ "computer_security", "consumer_electronics", "data_centers", "hardware", "internet_technology", "networking", "operating_systems", "programming_languages", "software", "technological_innovation" ],
+  "food_and_drink" : [ "barbecues_and_grilling", "beverages", "cuisines", "desserts_and_baking", "gastronomy", "healthy_eating" ],
+  "society" : [ "crime", "dating", "gay_life", "racism", "sex", "teens", "war", "welfare", "work" ],
+  "root" : [ "art_and_entertainment", "automotive_and_vehicles", "business_and_industrial", "careers", "education", "family_and_parenting", "finance", "food_and_drink", "govt_and_politics", "health_and_fitness", "home_and_garden", "pets", "real_estate", "religion_and_spirituality", "science", "shopping", "society", "sports", "style_and_fashion", "technology_and_computing", "travel" ],
+  "science" : [ "biology", "chemistry", "ecology", "engineering", "geography", "geology", "mathematics", "medicine", "physics", "weather" ],
+  "health_and_fitness" : [ "addiction", "alternative_medicine", "dental_care", "disease", "drugs", "exercise", "nutrition", "sports_medicine", "therapy", "weight_loss" ],
+  "religion_and_spirituality" : [ "atheism", "buddhism", "christianity", "hinduism", "islam", "judaism" ],
+  "art_and_entertainment" : [ "books_and_literature", "celebrity_fan_and_gossip", "comics_and_animation", "dance", "humor", "movies_and_tv", "music", "theatre", "visual_art_and_design" ],
+  "business_and_industrial" : [ "advertising_and_marketing", "agriculture_and_forestry", "automation", "energy", "iron_and_steel_industry", "manufacturing", "metals", "paper_industry", "textile_industry" ],
+  "travel" : [ "hotels", "tourist", "transports", "travel_agencies" ],
+  "finance" : [ "bank", "grants", "investing", "personal_finance" ],
+  "real_estate" : [ "apartments", "architects" ],
+  "shopping" : [ "auctions", "retail", "shops", "toys" ]
+}
