@@ -36,9 +36,7 @@ def stemmed_words_tfidf(doc):
 
 
 
-def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries):
-
-	categories = json.load(open("categories.json"))
+def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries,categories):
 
 	if categoryToLoad in categories.keys():
 		dictionary = dictionaries["dict_"+categoryToLoad]

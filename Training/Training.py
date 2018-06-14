@@ -44,7 +44,7 @@ def __normalizeFeature(dataset):
 		i = i + 1
 	return dataset
 
-def start_training(datasetName,datasetsFolder,featureType,function,solver):
+def start_training(datasetName,datasetsFolder,featureType,function,solver,path,taxonomy):
 	toReturn = dict()
 	"""loading train  dataset """
 	data_train = load_files(datasetsFolder+"/"+str(datasetName), encoding='latin1')
@@ -72,7 +72,7 @@ def start_training(datasetName,datasetsFolder,featureType,function,solver):
 	feature_names = vectorizer.get_feature_names()
 
 	"""Save vectorizer in file .pickle"""
-	#pickle.dump(vectorizer.vocabulary_,open("dictionaries_"+featureType+"/dict_"+str(datasetName)+".pkl","wb"))
+	pickle.dump(vectorizer.vocabulary_,open(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)+"/dict_"+str(datasetName)+".pkl","wb"))
 
 	"""CONFIGURO LA RETE NEURALE E TRAINING DELLA RETE NEURALE"""
 	numrip=0
@@ -93,7 +93,7 @@ def start_training(datasetName,datasetsFolder,featureType,function,solver):
 		
 	print ("Score on training set: ",currentScore)
 
-	#joblib.dump(clf,"neural_networks_"+featureType+"/NN_"+str(datasetName))
+	joblib.dump(clf,path+"/NN/"+taxonomy+"/neural_networks_"+featureType+"/NN_"+str(datasetName))
 	toReturn["score"] = currentScore 
 	return toReturn
 
@@ -101,14 +101,18 @@ def start_training(datasetName,datasetsFolder,featureType,function,solver):
 datasets = sys.argv[1]
 """ featureType can be 'count'  or  'normalize' """
 featureType = sys.argv[2]
+path = sys.argv[3]
+taxonomy = sys.argv[4]
 
-if not os.path.exists("neural_networks_"+str(featureType)):
-    os.makedirs("neural_networks_"+str(featureType))
-if not os.path.exists("dictionaries_"+str(featureType)):
-    os.makedirs("dictionaries_"+str(featureType))
+if not os.path.exists(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType)):
+    os.makedirs(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType))
+if not os.path.exists(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)):
+    os.makedirs(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType))
 
-activationfunction = ['identity', 'logistic', 'tanh', 'relu']
-solvers = ['sgd','lbfgs','adam']
+#activationfunction = ['identity', 'logistic', 'tanh', 'relu']
+#solvers = ['sgd','lbfgs','adam']
+activationfunction = ['identity']
+solvers = ['adam']
 dirs = os.listdir(datasets)
 resultsWithDifferentConfigurations = dict()
 for function in activationfunction:
@@ -120,7 +124,7 @@ for function in activationfunction:
 			trainingAccuracy = list()
 			dataset = str(file)
 			print (dataset)
-			result = start_training(dataset,datasets,featureType,function,solver)
+			result = start_training(dataset,datasets,featureType,function,solver,path,taxonomy)
 			trainingAccuracy.append(dataset)
 			trainingAccuracy.append(result['score'])
 			localScore += result['score']
@@ -132,10 +136,11 @@ for function in activationfunction:
 
 		trainingAccuracyDataFrame = pd.DataFrame(listTrainingAccuracy, columns=['category','score','n_samples','n_features'])
 		trainingAccuracyDataFrame.set_index("category")
-		trainingAccuracyDataFrame.to_csv("training_accuracy_"+str(function+"_"+solver)+".csv")
+		if not os.path.exists(taxonomy):
+			os.makedirs(taxonomy)
+
+		trainingAccuracyDataFrame.to_csv(taxonomy+"/training_accuracy_"+str(function+"_"+solver)+".csv")
 
 		print(resultsWithDifferentConfigurations)
 
-
-
-		pd.DataFrame.from_dict(resultsWithDifferentConfigurations,orient='index').to_csv("settingResults.csv", sep=',')
+		pd.DataFrame.from_dict(resultsWithDifferentConfigurations,orient='index').to_csv(taxonomy+"/settingResults_"+taxonomy+".csv", sep=',')

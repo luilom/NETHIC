@@ -26,20 +26,20 @@ def stemmed_words_tfidf(doc):
 	return (stemmer.stem(w) for w in analyzer(doc))
 
 
-def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries):   
-    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries)
+def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories):   
+    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,categories)
     if result is not None:
         dictResults[startCategory] = result
         for result in dictResults[startCategory]:
-            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries)
+            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories)
         return dictResults
     return None
 
 
-def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries):
+def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,categories):
     if int(currLevel) <= int(maxLevel):
         dictScores = dict()
-        categories =  Classifier.classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries)
+        categories =  Classifier.classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries,categories)
         if categories is not None:
             for i in range(len(categories)):
                 dictScores[str(categories[i].label)] = categories[i]
@@ -95,10 +95,10 @@ def clearFileName(filename):
 
 
 #This method return for any leaf a correct parent 
-def fromLeafToParent(leaf, categories):
+def fromLeafToParent(leaf, categories, root):
     for parent in categories:
         if leaf in categories[parent]:
-            if parent != "root":
+            if parent != root:
                 return parent
             else:
                 return leaf
@@ -109,14 +109,14 @@ def fromLeafToParent(leaf, categories):
 
 levels = sys.argv[1]
 startCategory = sys.argv[2]
-datasetName = sys.argv[3]
-path = sys.argv[4]
+pathDataset = sys.argv[3]
+pathNNDICT = sys.argv[4]
 featureType = sys.argv[5]
+taxonomy = sys.argv[6]
 
-
-pathNN = path+'/neural_networks_'+str(featureType)
-pathDict = path+'/dictionaries_'+str(featureType)
-categories = json.load(open("categories.json"))
+pathNN = pathNNDICT+"/NN/"+taxonomy+"/neural_networks_"+str(featureType)
+pathDict = pathNNDICT+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)
+categories = json.load(open(str(pathNNDICT+"/"+taxonomy+"_categories.json")))
 
 
 neuralNetworks = dict()
@@ -138,7 +138,7 @@ print("End to load Neural Networks and Dictionaries")
 
 
 """CARICO IL DATASET"""
-data_test = load_files(datasetName, encoding='latin1')
+data_test = load_files(pathDataset, encoding='latin1')
 globalResults = list()
 
 #CLASSIFICO UN DOCUMENTO ALLA VOLTA con il CUT Scelto
@@ -160,7 +160,7 @@ for i in range(0,len(data_test.data)):
         currentTollerance = 0
         dictResults = dict()
         startTime = time.time()
-        dictResults = recursiveClassification(startCategory,0,levels,dictResults,i,newData_test,round(cutoff, 2),neuralNetworks,dictionaries)
+        dictResults = recursiveClassification(startCategory,0,levels,dictResults,i,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,categories)
         stopTime = time.time()
         cutoff = cutoff - round(0.1, 2)
         results = dict()
@@ -207,7 +207,7 @@ for i in range(0,len(data_test.data)):
 
 
     currentClassificationResult.append(filename)
-    currentClassificationResult.append(fromLeafToParent(filename,categories))
+    currentClassificationResult.append(fromLeafToParent(filename,categories,startCategory))
     currentClassificationResult.append(len(np.unique(data_test.data[i].split(" "))))
     currentClassificationResult.append(round(stopTime-startTime,3))
     currentClassificationResult.append(match)
@@ -215,9 +215,11 @@ for i in range(0,len(data_test.data)):
     globalResults.append(currentClassificationResult)
     
 
+if not os.path.exists(taxonomy):
+    os.makedirs(taxonomy)
     
-#dataframeAccuracy = pandas.DataFrame(globalResults, columns=['fileName','label1','label2','label3','realLabel','parent','size','time','match'])
-#dataframeAccuracy.to_csv("classificationResults.csv")
+dataframeAccuracy = pandas.DataFrame(globalResults, columns=['fileName','label1','label2','label3','realLabel','parent','size','time','match'])
+dataframeAccuracy.to_csv(taxonomy+"/classificationResults.csv")
 
     
 
