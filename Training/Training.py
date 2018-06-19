@@ -44,17 +44,31 @@ def __normalizeFeature(dataset):
 		i = i + 1
 	return dataset
 
-def start_training(datasetName,datasetsFolder,featureType,function,solver,path,taxonomy):
+def start_training(dataset,featureType,function,solver,path,taxonomy):
+
+	folderNNCurrentSetting = path+"NN/"+taxonomy+"/"+function+"_"+solver
+	folderDictCurrentSetting = path+"DICT/"+taxonomy+"/"+function+"_"+solver
+
+	if not os.path.exists(folderNNCurrentSetting):
+		os.makedirs(folderNNCurrentSetting)
+	if not os.path.exists(folderNNCurrentSetting+"/neural_networks_"+str(featureType)):
+		os.makedirs(folderNNCurrentSetting+"/neural_networks_"+str(featureType))
+
+	if not os.path.exists(folderDictCurrentSetting):
+		os.makedirs(folderDictCurrentSetting)
+	if not os.path.exists(folderDictCurrentSetting+"/dictionaries_"+str(featureType)):
+		os.makedirs(folderDictCurrentSetting+"/dictionaries_"+str(featureType))
+
 	toReturn = dict()
 	"""loading train  dataset """
-	data_train = load_files(datasetsFolder+"/"+str(datasetName), encoding='latin1')
+	
 	print('data loaded')
 	"""create dataset with vectorizer and normalize"""
 	vectorizer = CountVectorizer(decode_error="replace",stop_words='english',analyzer=stemmed_words_count)
 	
 
 	"""vectorizer dataset train"""
-	X_train = vectorizer.fit_transform(data_train.data)
+	X_train = vectorizer.fit_transform(dataset.data)
 
 	if featureType == "normalize":
 		X_train = __normalizeFeature(X_train)
@@ -65,40 +79,42 @@ def start_training(datasetName,datasetsFolder,featureType,function,solver,path,t
 
 	print("n_samples: %d, n_features: %d" % X_train.shape)
 	X_train = normalize(X_train)
-	y_train = data_train.target
+	y_train = dataset.target
 
 
 	""" get features Name from vectorizer """
 	feature_names = vectorizer.get_feature_names()
 
 	"""Save vectorizer in file .pickle"""
-	pickle.dump(vectorizer.vocabulary_,open(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)+"/dict_"+str(datasetName)+".pkl","wb"))
+	pickle.dump(vectorizer.vocabulary_,open(folderDictCurrentSetting+"/dictionaries_"+str(featureType)+"/dict_"+str(datasetName)+".pkl","wb"))
 
 	"""CONFIGURO LA RETE NEURALE E TRAINING DELLA RETE NEURALE"""
 	numrip=0
 	tol=0.005
-	
-	clf = MLPClassifier(activation=function,hidden_layer_sizes=(60,), max_iter=200, shuffle=True,solver=solver, tol=tol)
+	max_iter = 200
+
+	clf = MLPClassifier(activation=function,hidden_layer_sizes=(60,), max_iter=max_iter, shuffle=True,solver=solver, tol=tol)
 	clf.fit(X_train,y_train)
 	currentScore = clf.score(X_train,y_train)
 	print("Try: ",numrip+1," Current score: ",currentScore)
 	
 	while currentScore < 0.8 and numrip<1 :
 		numrip = numrip + 1
-		clf = MLPClassifier(activation=function,hidden_layer_sizes=(60,), max_iter=200, shuffle=True,solver=solver, tol=tol)
+		clf = MLPClassifier(activation=function,hidden_layer_sizes=(60,), max_iter=max_iter, shuffle=True,solver=solver, tol=tol)
 		clf.fit(X_train,y_train)
 		currentScore = clf.score(X_train,y_train)
-		tol = tol * 0.1
+		tol *= 0.1
+		max_iter += 50
 		print("Try: ",numrip+1," Current score: ",currentScore)
 		
 	print ("Score on training set: ",currentScore)
 
-	joblib.dump(clf,path+"/NN/"+taxonomy+"/neural_networks_"+featureType+"/NN_"+str(datasetName))
+	joblib.dump(clf,folderNNCurrentSetting+"/neural_networks_"+featureType+"/NN_"+str(datasetName))
 	toReturn["score"] = currentScore 
 	return toReturn
 
 
-datasets = sys.argv[1]
+datasetsFolder = sys.argv[1]
 """ featureType can be 'count'  or  'normalize' """
 featureType = sys.argv[2]
 path = sys.argv[3]
@@ -109,12 +125,12 @@ if not os.path.exists(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType))
 if not os.path.exists(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)):
     os.makedirs(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType))
 
-#activationfunction = ['identity', 'logistic', 'tanh', 'relu']
-#solvers = ['sgd','lbfgs','adam']
-activationfunction = ['identity']
+activationfunction = ['logistic']
 solvers = ['adam']
-dirs = os.listdir(datasets)
-resultsWithDifferentConfigurations = dict()
+#activationfunction = ['logistic']
+#solvers = ['adam']
+dirs = os.listdir(datasetsFolder)
+AVGResultsWithDifferentConfigurations = dict()
 for function in activationfunction:
 	for solver in solvers:
 		listTrainingAccuracy = list()
@@ -122,17 +138,18 @@ for function in activationfunction:
 		print(function+" - "+solver)
 		for file in dirs:
 			trainingAccuracy = list()
-			dataset = str(file)
-			print (dataset)
-			result = start_training(dataset,datasets,featureType,function,solver,path,taxonomy)
-			trainingAccuracy.append(dataset)
+			datasetName = str(file)
+			print(datasetName)
+			dataset = load_files(datasetsFolder+"/"+str(datasetName), encoding='latin1')
+			result = start_training(dataset,featureType,function,solver,path,taxonomy)
+			trainingAccuracy.append(datasetName)
 			trainingAccuracy.append(result['score'])
 			localScore += result['score']
 			trainingAccuracy.append(result['n_samples'])
 			trainingAccuracy.append(result['n_features'])
 			listTrainingAccuracy.append(trainingAccuracy)
 
-		resultsWithDifferentConfigurations[str(function)+"-"+str(solver)] = localScore/len(dirs)
+		AVGResultsWithDifferentConfigurations[str(function)+"-"+str(solver)] = localScore/len(dirs)
 
 		trainingAccuracyDataFrame = pd.DataFrame(listTrainingAccuracy, columns=['category','score','n_samples','n_features'])
 		trainingAccuracyDataFrame.set_index("category")
@@ -141,6 +158,6 @@ for function in activationfunction:
 
 		trainingAccuracyDataFrame.to_csv(taxonomy+"/training_accuracy_"+str(function+"_"+solver)+".csv")
 
-		print(resultsWithDifferentConfigurations)
+		print(AVGResultsWithDifferentConfigurations)
 
-		pd.DataFrame.from_dict(resultsWithDifferentConfigurations,orient='index').to_csv(taxonomy+"/settingResults_"+taxonomy+".csv", sep=',')
+		pd.DataFrame.from_dict(AVGResultsWithDifferentConfigurations,orient='index').to_csv(taxonomy+"/training_accuracy_"+taxonomy+".csv", sep=',')

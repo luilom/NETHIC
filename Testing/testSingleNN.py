@@ -1,5 +1,5 @@
 import Classifier
-import Result
+import Utility
 import pandas as pd
 import numpy as np
 import sys
@@ -37,12 +37,14 @@ def clearFileName(filename):
     return split[-1]
 
 
-#This method return for any leaf a correct parent
-def fromLeafToParent(leaf, categories):
+#This method return for any leaf a correct parent 
+def fromLeafToParent(leaf, categories, root):
     for parent in categories:
         if leaf in categories[parent]:
+            if parent != root:
                 return parent
-            
+            else:
+                return leaf
     return None
     
 def classification(data_test):
@@ -62,25 +64,23 @@ def classification(data_test):
         category = categories[startCategory][np.argmax(pred[0,:])].lower()
         localscore = pred[0,np.argmax(pred[0,:])]
         pred[0,np.argmax(pred[0,:])] = 0
-        toReturn.append(Result.Result(category,localscore))
+        toReturn.append(Utility.Result(category,localscore))
 
     return toReturn
     
 
-def startTestNN(levels,startCategory,datasetName,path,featureType,categories,rootCategorization):
+def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,categories,rootCategorization):
 
+    #E' una lista di liste. Ogni lista contenuta contiene la classe reale e quella cacolata per ogni singolo documento. cm serve per generare la confusion_matrix
     cm =list()
     
     """START"""
-    pathNN = str(path)+'/neural_networks_'+str(featureType)
-    pathDict = str(path)+'/dictionaries_'+str(featureType)
-    categories = json.load(open("categories.json"))
     numCategoryToTake = 1
 
     #print("Start to load Neural Networks and Dictionaries")
 
-    model = joblib.load(path+'/neural_networks_'+str(featureType)+"/"+"NN_"+startCategory)
-    dictionary = joblib.load(path+'/dictionaries_'+str(featureType)+"/"+"dict_"+startCategory+".pkl")
+    model = joblib.load(pathNN+"/"+"NN_"+startCategory)
+    dictionary = joblib.load(pathDict+"/"+"dict_"+startCategory+".pkl")
     
     #print("End to load Neural Networks and Dictionaries")
 
@@ -88,7 +88,7 @@ def startTestNN(levels,startCategory,datasetName,path,featureType,categories,roo
 
     
     """CARICO IL DATASET"""
-    data_test = load_files("../datasets/"+datasetName, encoding='latin1')
+    data_test = load_files("../datasets/"+pathDataset, encoding='latin1')
     globalResults = list()
 
     
@@ -96,11 +96,11 @@ def startTestNN(levels,startCategory,datasetName,path,featureType,categories,roo
     documentTaked = 0
     toReturn = list()
 
-    print(startCategory)
+    print("     "+startCategory)
     for i in range(0,len(data_test.data)):
         current = list()
         realCategory = data_test.filenames[i] 
-        parentCategory = fromLeafToParent(clearFileName(realCategory),categories)
+        parentCategory = fromLeafToParent(clearFileName(realCategory),categories,"society")
 
         if parentCategory == startCategory or rootCategorization == True:
             documentTaked += 1
@@ -122,18 +122,18 @@ def startTestNN(levels,startCategory,datasetName,path,featureType,categories,roo
                 category = categories[startCategory][np.argmax(pred[0,:])].lower()
                 localscore = pred[0,np.argmax(pred[0,:])]
                 pred[0,np.argmax(pred[0,:])] = 0
-                selectedCategory.append(Result.Result(category,localscore))
+                selectedCategory.append(Utility.Result(category,localscore))
 
             for i in range(len(selectedCategory)):
                 if rootCategorization == False:
-                    if selectedCategory[i].target == clearFileName(realCategory):
+                    if selectedCategory[i].label == clearFileName(realCategory):
                         correctClassifications += 1
                         break
                 else:
-                    if selectedCategory[i].target == parentCategory:
+                    if selectedCategory[i].label == parentCategory:
                         correctClassifications += 1
                         break
-            current.append(selectedCategory[i].target)#calcolato
+            current.append(selectedCategory[i].label)#calcolato
             if rootCategorization:
                 if parentCategory == "root":
                     current.append(clearFileName(realCategory.split("/")[-1]))#reale
@@ -151,25 +151,56 @@ def startTestNN(levels,startCategory,datasetName,path,featureType,categories,roo
     return toReturn,cm
 	
         
-    
 
-categories = json.load(open("categories.json"))
-
-toSave = list()
-for category in categories:
-    if category == "root":
-        result, cm  = startTestNN(1,category,"datasets_test",".","count",categories,True)
-    else:
-        result, cm = startTestNN(1,category,"datasets_test",".","count",categories,False)
-    toSave.append(result)
-
-    testAccuracyDataFrame = pd.DataFrame(cm, columns=['evaluated','real'])
-    testAccuracyDataFrame.to_csv("confusion_matrix/"+str(category)+".csv")
-
-testAccuracyDataFrame = pd.DataFrame(toSave, columns=['category','score','n_samples'])
-testAccuracyDataFrame.to_csv("test_accuracy_distribution_singleNN.csv")
+startCategory = sys.argv[1]
+pathDataset = sys.argv[2]
+pathNNDICT = sys.argv[3]
+featureType = sys.argv[4]
+taxonomy = sys.argv[5]
 
 
+
+#activationfunction = ['identity', 'logistic', 'tanh', 'relu']
+#solvers = ['sgd','lbfgs','adam']
+activationfunction = ['logistic']
+solvers = ['adam']
+categories = json.load(open(str(pathNNDICT+"/"+taxonomy+"_categories.json")))
+
+if not os.path.exists(taxonomy):
+    os.makedirs(taxonomy)
+
+
+configurationResults = dict()
+for function in activationfunction:
+    for solver in solvers:
+        print(function+"_"+solver)
+        pathNN = pathNNDICT+"NN/"+taxonomy+"/"+function+"_"+solver+"/neural_networks_"+str(featureType)
+        pathDict = pathNNDICT+"DICT/"+taxonomy+"/"+function+"_"+solver+"/dictionaries_"+str(featureType)
+        toSave = list()
+        avgScoreCurrentSetting = 0
+        for category in categories:
+            if category == startCategory:
+                result, cm  = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,True)
+            else:
+                result, cm = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,False)
+
+            toSave.append(result)
+
+            avgScoreCurrentSetting += result[1]
+
+            testAccuracyDataFrame = pd.DataFrame(cm, columns=['evaluated','real'])
+
+            if not os.path.exists(taxonomy+"/confusion_matrix/"+function+"_"+solver):
+                os.makedirs(taxonomy+"/confusion_matrix/"+function+"_"+solver)
+
+            testAccuracyDataFrame.to_csv(taxonomy+"/confusion_matrix/"+function+"_"+solver+"/"+str(category)+".csv")
+        
+        configurationResults[function+"_"+solver] = avgScoreCurrentSetting/len(categories)
+
+        testAccuracyDataFrame = pd.DataFrame(toSave, columns=['category','score','n_samples'])
+        testAccuracyDataFrame.to_csv(taxonomy+"/test_accuracy_("+function+"_"+solver+").csv")
+
+pd.DataFrame.from_dict(configurationResults,orient='index').to_csv(taxonomy+"/test_accuracy_singleNN.csv", sep=',')
 
 
 
