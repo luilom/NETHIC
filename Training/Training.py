@@ -98,7 +98,7 @@ def start_training(dataset,featureType,function,solver,path,taxonomy):
 	currentScore = clf.score(X_train,y_train)
 	print("Try: ",numrip+1," Current score: ",currentScore)
 	
-	while currentScore < 0.8 and numrip<1 :
+	while currentScore < 0.8 and numrip<5 :
 		numrip = numrip + 1
 		clf = MLPClassifier(activation=function,hidden_layer_sizes=(60,), max_iter=max_iter, shuffle=True,solver=solver, tol=tol)
 		clf.fit(X_train,y_train)
@@ -120,15 +120,17 @@ featureType = sys.argv[2]
 path = sys.argv[3]
 taxonomy = sys.argv[4]
 
-if not os.path.exists(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType)):
-    os.makedirs(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType))
-if not os.path.exists(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)):
-    os.makedirs(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType))
+#if not os.path.exists(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType)):
+    #os.makedirs(path+"/NN/"+taxonomy+"/neural_networks_"+str(featureType))
+#if not os.path.exists(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType)):
+    #os.makedirs(path+"/DICT/"+taxonomy+"/dictionaries_"+str(featureType))
 
+
+#activationfunction = ['identity', 'logistic', 'tanh', 'relu']
+#solvers = ['adam','lbfgs']
 activationfunction = ['logistic']
 solvers = ['adam']
-#activationfunction = ['logistic']
-#solvers = ['adam']
+
 dirs = os.listdir(datasetsFolder)
 AVGResultsWithDifferentConfigurations = dict()
 for function in activationfunction:

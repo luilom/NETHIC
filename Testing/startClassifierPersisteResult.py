@@ -103,6 +103,16 @@ def fromLeafToParent(leaf, categories, root):
                 return leaf
     return None
 
+def fromLeafToAncestor(leaf, categories, ancestor):
+    if str(leaf) == "None":
+        return leaf
+    if leaf in categories["root"]:
+        return leaf
+    elif leaf in categories[ancestor]:
+        return ancestor
+    else:
+        return fromLeafToAncestor(fromLeafToParent(leaf,categories,"root"),categories,ancestor)
+
 
 """START"""
 
@@ -209,11 +219,11 @@ for function in activationfunction:
             currentClassificationResult.append(data_test.filenames[i].split("/")[-1])
 
             if len(sorted_results)>=1:
-                currentClassificationResult.append(sorted_results[0][0])
+                currentClassificationResult.append(sorted_results[0][0]+" ("+str(sorted_results[0][1])+")")
             if len(sorted_results)>=2:
-                currentClassificationResult.append(sorted_results[1][0])
+                currentClassificationResult.append(sorted_results[1][0]+" ("+str(sorted_results[1][1])+")")
             if len(sorted_results)>=3:
-                currentClassificationResult.append(sorted_results[2][0])
+                currentClassificationResult.append(sorted_results[2][0]+" ("+str(sorted_results[2][1])+")")
             else:
                 for i in range(0,3-len(sorted_results)):
                     currentClassificationResult.append("Null")
@@ -221,11 +231,11 @@ for function in activationfunction:
 
 
 
-            currentClassificationResult.append(filename)
-            currentClassificationResult.append(fromLeafToParent(filename,categories,startCategory))
-            currentClassificationResult.append(len(np.unique(data_test.data[i].split(" "))))
-            currentClassificationResult.append(round(stopTime-startTime,3))
-            currentClassificationResult.append(match)
+            #currentClassificationResult.append(filename)
+            #currentClassificationResult.append(fromLeafToAncestor(filename,categories,startCategory))
+            #currentClassificationResult.append(len(np.unique(data_test.data[i].split(" "))))
+            #currentClassificationResult.append(round(stopTime-startTime,3))
+            #currentClassificationResult.append(match)
             
             globalResults.append(currentClassificationResult)
 
@@ -235,10 +245,11 @@ for function in activationfunction:
         if not os.path.exists(taxonomy):
             os.makedirs(taxonomy)
             
-        dataframeAccuracy = pandas.DataFrame(globalResults, columns=['fileName','label1','label2','label3','realLabel','parent','size','time','match'])
-        dataframeAccuracy.to_csv(taxonomy+"/classificationResults_("+function+"_"+solver+").csv")
+        #dataframeAccuracy = pandas.DataFrame(globalResults, columns=['fileName','label1','label2','label3','realLabel','parent','size','time','match'])
+        dataframeAccuracy = pandas.DataFrame(globalResults, columns=['fileName','label1','label2','label3'])
+        dataframeAccuracy.to_csv(taxonomy+"/classificationResults_weapon_and_religious_extremist("+function+"_"+solver+").csv")
 
-pandas.DataFrame.from_dict(configurationResults,orient='index').to_csv(taxonomy+"/test_accuracy_model.csv", sep=',')
+pandas.DataFrame.from_dict(configurationResults,orient='index').to_csv(taxonomy+"/test_accuracy_model_weapon_and_religious_extremist.csv", sep=',')
 #print(configurationResults)
     
 

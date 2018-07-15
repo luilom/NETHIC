@@ -37,6 +37,29 @@ def clearFileName(filename):
     return split[-1]
 
 
+#Serve per prendere il figlio dell'antenato associato alla leaf. Se la leaf appartiene al path dell'antenato, restituisce il figlio dell'antenato che appartiene allo stesso path di leaf, altrimenti retituisce un figlio della rootCategory. Viene usato per costruire il csv per le confusion matrix
+def fromLeftToAncestorChild(leaf, categories, ancestor, rootCategory):
+    if leaf in categories[ancestor]:
+        return leaf
+    while leaf not in categories[ancestor]:
+        leaf = fromLeafToParent(leaf,categories,rootCategory)
+        
+    return leaf
+
+
+
+#Serve per prendere l'antenato, restituisce l'ancestor se leaf appartiene al suo path, altrimenti restituisce la corretta categoria figlia di rootCategory (la categoria madre "root") viene usato per valutare la classificazione
+def fromLeafToAncestor(leaf, categories, ancestor, rootCategory):
+    if leaf in categories[rootCategory]:
+        return leaf
+    elif leaf in categories[ancestor]:
+        return ancestor
+    else:
+        return fromLeafToAncestor(fromLeafToParent(leaf,categories,rootCategory),categories,ancestor,rootCategory)
+    
+    
+    
+
 #This method return for any leaf a correct parent 
 def fromLeafToParent(leaf, categories, root):
     for parent in categories:
@@ -45,6 +68,7 @@ def fromLeafToParent(leaf, categories, root):
                 return parent
             else:
                 return leaf
+
     return None
     
 def classification(data_test):
@@ -69,7 +93,7 @@ def classification(data_test):
     return toReturn
     
 
-def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,categories,rootCategorization):
+def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,categories,rootCategorization,rootCategory):
 
     #E' una lista di liste. Ogni lista contenuta contiene la classe reale e quella cacolata per ogni singolo documento. cm serve per generare la confusion_matrix
     cm =list()
@@ -99,8 +123,10 @@ def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,cat
     print("     "+startCategory)
     for i in range(0,len(data_test.data)):
         current = list()
-        realCategory = data_test.filenames[i] 
-        parentCategory = fromLeafToParent(clearFileName(realCategory),categories,"society")
+        realCategory = data_test.filenames[i]
+        
+        parentCategory = fromLeafToAncestor(clearFileName(realCategory),categories,startCategory,rootCategory)
+        
 
         if parentCategory == startCategory or rootCategorization == True:
             documentTaked += 1
@@ -126,7 +152,7 @@ def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,cat
 
             for i in range(len(selectedCategory)):
                 if rootCategorization == False:
-                    if selectedCategory[i].label == clearFileName(realCategory):
+                    if selectedCategory[i].label == fromLeftToAncestorChild(clearFileName(realCategory.split("/")[-1]),categories,startCategory,rootCategory):
                         correctClassifications += 1
                         break
                 else:
@@ -134,17 +160,19 @@ def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,cat
                         correctClassifications += 1
                         break
             current.append(selectedCategory[i].label)#calcolato
-            if rootCategorization:
+            """if rootCategorization:
                 if parentCategory == "root":
                     current.append(clearFileName(realCategory.split("/")[-1]))#reale
-                else:
-                    current.append(parentCategory)#reale
+                else:#reale
+                    current.append(parentCategory)
+                    
             else:
-                current.append(clearFileName(realCategory.split("/")[-1]))#reale
-
+                current.append(clearFileName(realCategory.split("/")[-1]))#reale"""
+            current.append(fromLeftToAncestorChild(clearFileName(realCategory.split("/")[-1]),categories,startCategory,rootCategory))
             cm.append(current)
 
     toReturn.append(startCategory)
+    print(str(correctClassifications)+" --> "+str(documentTaked))
     toReturn.append(float(correctClassifications)/float(documentTaked))
     toReturn.append(documentTaked)
 
@@ -152,7 +180,7 @@ def startTestNN(levels,startCategory,pathDataset,pathNN,pathDict,featureType,cat
 	
         
 
-startCategory = sys.argv[1]
+rootCategory = sys.argv[1]
 pathDataset = sys.argv[2]
 pathNNDICT = sys.argv[3]
 featureType = sys.argv[4]
@@ -161,7 +189,7 @@ taxonomy = sys.argv[5]
 
 
 #activationfunction = ['identity', 'logistic', 'tanh', 'relu']
-#solvers = ['sgd','lbfgs','adam']
+#solvers = ['lbfgs','adam']
 activationfunction = ['logistic']
 solvers = ['adam']
 categories = json.load(open(str(pathNNDICT+"/"+taxonomy+"_categories.json")))
@@ -179,10 +207,10 @@ for function in activationfunction:
         toSave = list()
         avgScoreCurrentSetting = 0
         for category in categories:
-            if category == startCategory:
-                result, cm  = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,True)
+            if category == rootCategory:
+                result, cm  = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,True,rootCategory)
             else:
-                result, cm = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,False)
+                result, cm = startTestNN(1,category,pathDataset,pathNN,pathDict,featureType,categories,False,rootCategory)
 
             toSave.append(result)
 
