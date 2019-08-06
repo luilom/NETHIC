@@ -1,0 +1,6 @@
+{
+  "society" : [ "crime", "dating", "gay_life", "other" ,"racism","religion_and_spirituality", "sex", "war", "welfare", "work" ],
+  "racism" : [ "ethnic_racism", "religious_racism", "sexist_racism" ],
+  "war" : [ "civil_wars", "ethnic_conflict", "religion-based_wars" ],
+  "crime" : [ "arson", "childhood_abuse", "cyber_crime", "domestic_abuse", "fraud", "murder", "rape_and_sexual_assault", "robbery", "terrorism", "torture" ]
+}

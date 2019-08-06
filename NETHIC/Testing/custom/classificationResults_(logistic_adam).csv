@@ -1,0 +1,10 @@
+,fileName,label1,label2,label3,realLabel,parent,size,time,match
+0,papa.txt,religion_and_spirituality/,Null,Null,papa.tx,,301,0.039,0
+1,Lee Weissman.txt,religion_and_spirituality/,Null,Null,Lee Weissman.tx,,301,0.044,0
+2,Janna Jihad.txt,crime/torture/,welfare/,crime/murder/,Janna Jihad.tx,,270,0.077,0
+3,aeron.txt,crime/terrorism/,crime/cyber_crime/,welfare/,aeron.tx,,67,0.07,0
+4,understanding Jihad.txt,crime/terrorism/,Null,Null,understanding Jihad.tx,,301,0.073,0
+5,champions.txt,other/,Null,Null,champions.tx,,301,0.038,0
+6,XI.txt,war/religion-based_wars/,Null,Null,XI.tx,,301,0.052,0
+7,Barak Mendelsohn.txt,racism/religious_racism/,war/religion-based_wars/,crime/terrorism/,Barak Mendelsohn.tx,,84,0.105,0
+8,beyonce.txt,gay_life/,other/,dating/,beyonce.tx,,83,0.038,0
