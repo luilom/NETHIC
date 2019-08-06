@@ -1,9 +1,0 @@
-{
-  "unrest_and_threaths" : [ "rebellion", "religion_and_social_conflict", "revolution" ],
-  "weapon" : [ "biological_weapon", "chemical_weapon", "explosive_weapon", "nuclear_weapon", "offensive_weapon" ],
-  "offensive_weapon" : [ "gun", "rifle", "rocket_launchers" ],
-  "root" : [ "event", "group", "others", "religion", "weapon" ],
-  "event" : [ "terrorism_organisational_model", "terrorist_attack", "unrest_and_threaths", "violence_and_aggression" ],
-  "religious_extremist" : [ "christian_adversary", "islamic_adversary", "other_religious_adversary" ],
-  "group" : [ "criminal_organisation", "religious_extremist", "social_revolutionary" ]
-}
