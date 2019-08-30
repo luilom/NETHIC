@@ -2,3 +2,4 @@
 *.txt
 datasets
 NETHIC.2/datasetBuilder/datasets
+NETHIC.2/datasetBuilder/enwiki_dbow
