@@ -1,4 +1,4 @@
 *.pkl
 *.txt
 datasets
-NETHIC.2/datasetBuilder
+NETHIC.2/datasetBuilder/datasets
