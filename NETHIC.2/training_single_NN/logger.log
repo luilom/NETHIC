@@ -1,0 +1,30 @@
+INFO:root:Loading categories from json file
+INFO:root:Loading dataframe for current category : pets
+INFO:root:Splitting dataset in train and test
+INFO:root:Cross validation fold : 1
+INFO:root:Cross validation fold : 2
+INFO:root:Cross validation fold : 3
+INFO:root:Cross validation fold : 4
+INFO:root:Cross validation fold : 5
+INFO:root:Cross validation fold : 6
+INFO:root:Cross validation fold : 7
+INFO:root:Cross validation fold : 8
+INFO:root:Cross validation fold : 9
+INFO:root:Cross validation fold : 10
+INFO:root:Training model on training dataset
+INFO:root:Start to test model and evaluate scores
+INFO:root:Saving score on file : results_single_NN/pets_results.pkl
+INFO:root:CURRENT RESULTS FOR CATEGORY : pets are 
+ {'accuracy_training_test_k_fold_cv': [0.8844444444444445, 0.8711111111111111, 0.9244444444444444, 0.9244444444444444, 0.8533333333333334, 0.8888888888888888, 0.88, 0.8533333333333334, 0.9022222222222223, 0.9066666666666666], 'training_accuracie': 0.9355555555555556, 'test_accuracie': 0.88, 'f1_score': array([0.84782609, 0.9       , 0.90322581, 0.85436893, 0.88888889]), 'precision': array([0.84782609, 0.9       , 0.91803279, 0.83018868, 0.9       ]), 'recall': array([0.84782609, 0.9       , 0.88888889, 0.88      , 0.87804878])}
+INFO:root:Loading dataframe for current category : home_and_garden
+INFO:root:Splitting dataset in train and test
+INFO:root:Cross validation fold : 1
+INFO:root:Cross validation fold : 2
+INFO:root:Cross validation fold : 3
+INFO:root:Cross validation fold : 4
+INFO:root:Cross validation fold : 5
+INFO:root:Cross validation fold : 6
+INFO:root:Cross validation fold : 7
+INFO:root:Cross validation fold : 8
+INFO:root:Cross validation fold : 9
+INFO:root:Cross validation fold : 10
