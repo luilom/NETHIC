@@ -3,4 +3,6 @@ datasets
 NETHIC.2/datasetBuilder/datasets
 NETHIC.2/datasetBuilder/datasets_parziali
 NETHIC.2/datasetBuilder/enwiki_dbow
-NETHIC.2/datasetBuilder/dataframes/*.csv
+NETHIC.2/datasetBuilder/dataframes
+NETHIC.2/datasetBuilder/dataframes_doc2vec
+NETHIC.2/datasetBuilder/dataframes_doc2vec-BOW
