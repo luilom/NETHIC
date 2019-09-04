@@ -1,6 +1,7 @@
 *.txt
 datasets
 NETHIC.2/datasetBuilder/datasets
+NETHIC.2/datasetBuilder/dictionaries
 NETHIC.2/datasetBuilder/datasets_parziali
 NETHIC.2/datasetBuilder/enwiki_dbow
 NETHIC.2/datasetBuilder/dataframes
