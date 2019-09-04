@@ -38,7 +38,8 @@ for category in categories:
 
     accuracy_training_k_fold_cv = list()
     counter = 0
-    #Training in K-Fold--------------------------------------------------------------------------------
+
+    #Training in K-Fold
     for train_index, test_index in kf.split(X_train):
         counter += 1
         logging.info("Cross validation fold : {}".format(counter))
