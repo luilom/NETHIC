@@ -40,7 +40,7 @@ for key in tqdm(datasets.keys()):
 
 logging.info("Start with datasets for Hierarchical structure")
 
-path_dataset_hierarchical_model = 'datasets/datasets_test_modello_gerarchico'
+path_dataset_hierarchical_model = 'datasets/datasets_test_modello_gerarchico/documents'
 
 
 current_dataframe = list()

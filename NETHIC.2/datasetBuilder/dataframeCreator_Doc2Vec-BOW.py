@@ -8,37 +8,47 @@ from nltk.tokenize import word_tokenize
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.snowball import EnglishStemmer
-
+import sys
+from sklearn.datasets import load_files
+import numpy as np
+import pickle
+from sklearn.utils import Bunch
 
 def stemmed_words_count(doc):
-	stemmer = EnglishStemmer()
-	analyzer = CountVectorizer(stop_words='english').build_analyzer()
-	pattern1 = re.compile("(\W+|^)\d+(\W+|$)")
-	pattern2 = re.compile("(\W+|^)\d+\s+")
-	pattern3 = re.compile("(\W+|^)\d+\Z")
-	pattern4 = re.compile("\A\d+(\W+|$)")
-	pattern5 = re.compile("\s+\d+(\W+|$)")
-	doc = pattern1.sub(" ", doc)
-	doc = pattern2.sub(" ", doc)
-	doc = pattern3.sub(" ", doc)
-	doc = pattern4.sub(" ", doc)
-	doc = pattern5.sub(" ", doc)
-	return (stemmer.stem(w) for w in analyzer(doc))
+    stemmer = EnglishStemmer()
+    analyzer = CountVectorizer(stop_words='english').build_analyzer()
+    pattern1 = re.compile("(\W+|^)\d+(\W+|$)")
+    pattern2 = re.compile("(\W+|^)\d+\s+")
+    pattern3 = re.compile("(\W+|^)\d+\Z")
+    pattern4 = re.compile("\A\d+(\W+|$)")
+    pattern5 = re.compile("\s+\d+(\W+|$)")
+    doc = pattern1.sub(" ", doc)
+    doc = pattern2.sub(" ", doc)
+    doc = pattern3.sub(" ", doc)
+    doc = pattern4.sub(" ", doc)
+    doc = pattern5.sub(" ", doc)
+    return (stemmer.stem(w) for w in analyzer(doc))
 
-def bow_extractor(folder):
+def bow_extractor(folder,category):
     dataset = load_files(folder, encoding='latin1')
-	vectorizer = CountVectorizer(decode_error="replace",stop_words='english',analyzer=stemmed_words_count)
-	return vectorizer.fit_transform(dataset.data)
+    vectorizer = CountVectorizer(decode_error="replace",stop_words='english',analyzer=stemmed_words_count)
+    dataset_vectorized = vectorizer.fit_transform(dataset.data)
+    """Save vectorizer in file .pickle"""
+    pickle.dump(vectorizer.vocabulary_,open("dictionaries/dict_"+str(category)+".pkl","wb"))
+    return vectorizer
 
 def removeDigit(sentence):
         return re.sub("\_\d+", "", sentence)
 
 
 logging.info("Loading Doc2Vec model")
-model3DBOW = Doc2Vec.load("enwiki_dbow/doc2vec.bin")
+doc2vec = Doc2Vec.load("enwiki_dbow/doc2vec.bin")
 columns = ["filename","text","vector","label"]
 path_dataset_train = 'datasets/datasets_training_test_singole_reti'
 datasets = dict()
+
+logging.info("Reading folder where save dataframes")
+folder_where_save = sys.argv[1]
 
 logging.info("Start with datasets for single NN")
 logging.info("First level, all datasets are selected to create dataframes")
@@ -46,39 +56,44 @@ for sub_folder in os.listdir(path_dataset_train):
     if os.path.isdir(os.path.join(path_dataset_train,sub_folder)):
         datasets[sub_folder] = os.path.join(path_dataset_train,sub_folder)
 
+
 logging.info("Starting to create dataframes for any datasets")
 for key in tqdm(datasets.keys()):
-        bow_dataset = bow_extractor(datasets[key])
-        current_dataframe = list()
-        for (dirpath, dirnames, filenames) in os.walk(datasets[key]):
-                for filename in filenames:
-                        current_item = list()
-                        current_text = "".join(open(dirpath+"/"+filename).readlines())
-                        current_item.append(filename)
-                        current_item.append(current_text)
-                        current_item.append(model3DBOW.infer_vector(current_text.split()))
-                        current_item.append(dirpath.split("/")[len(dirpath.split("/"))-1])
-                        current_dataframe.append(current_item)
-        pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes/single_categories/"+str(key)+".pkl")
-        #pd.DataFrame(current_dataframe, columns = columns).to_csv("dataframes/single_categories/"+str(key)+".csv")
+    vectorizer = bow_extractor(datasets[key],key)  #Create bow dataset
+    current_dataframe = list()
+    doc_counter = 0
+    for (dirpath, dirnames, filenames) in os.walk(datasets[key]):
+        for filename in filenames:
+            current_item = list()
+            current_text = "".join(open(dirpath+"/"+filename).readlines())
+            current_item.append(filename)
+            current_item.append(current_text)
+            dataToBunch = Bunch(data=current_text,filenames="",target="")
+            current_item.append(np.concatenate((doc2vec.infer_vector(current_text.split()),np.array(vectorizer.transform(dataToBunch).toarray())),axis = None))
+            current_item.append(dirpath.split("/")[len(dirpath.split("/"))-1])
+            current_dataframe.append(current_item)
+            doc_counter += 1
+    pd.DataFrame(current_dataframe, columns = columns).to_pickle(folder_where_save+"/single_categories/"+str(key)+".pkl")
 
+
+"""#HIERARCHICAL
 logging.info("Start with datasets for Hierarchical structure")
-
 path_dataset_hierarchical_model = 'datasets/datasets_test_modello_gerarchico'
-
-
 current_dataframe = list()
 for (dirpath, dirnames, filenames) in os.walk(path_dataset_hierarchical_model):
-        for filename in tqdm(filenames):
-                current_item = list()
-                current_text = "".join(open(dirpath+"/"+filename).readlines())
-                current_item.append(filename)
-                current_item.append(current_text)
-                current_item.append(model3DBOW.infer_vector(current_text.split()))
-                current_item.append(re.sub("\_\d+", "", filename))
-                current_dataframe.append(current_item)
-pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes/hierarchical/hierarchical_model.pkl")
-#pd.DataFrame(current_dataframe, columns = columns).to_csv("dataframes/hierarchical/hierarchical_model.csv")
+    logging.info("Loading BOW dataset")
+    bow_dataset = bow_extractor(path_dataset_hierarchical_model)
+    doc_counter = 0
+    for filename in tqdm(filenames):
+        current_item = list()
+        current_text = "".join(open(dirpath+"/"+filename).readlines())
+        current_item.append(filename)
+        current_item.append(current_text)
+        current_item.append(np.concatenate(doc2vec.infer_vector((current_text.split()),np.array(bow_dataset[doc_counter].data)),axis = None))
+        current_item.append(re.sub("\_\d+", "", filename))
+        current_dataframe.append(current_item)
+        doc_counter += 1
+pd.DataFrame(current_dataframe, columns = columns).to_pickle(folder_where_save+"/hierarchical/hierarchical_model.pkl")"""
 
 
 
