@@ -7,5 +7,7 @@ NETHIC.2/datasetBuilder/enwiki_dbow
 NETHIC.2/datasetBuilder/dataframes
 NETHIC.2/datasetBuilder/dataframes_doc2vec
 NETHIC.2/datasetBuilder/dataframes_doc2vec-BOW
+NETHIC.2/datasetBuilder/dataframes_BOW
 NETHIC.2/training_single_NN/results_single_NN_doc2vec-BOW/*
 NETHIC.2/training_single_NN/results_single_NN_doc2vec/*
+NETHIC.2/training_single_NN/results_single_NN_BOW/*
