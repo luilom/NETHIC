@@ -1,7 +1,9 @@
 *.txt
 datasets
 NETHIC.2/datasetBuilder/datasets
+NETHIC.2/datasetBuilder/datasets_old
 NETHIC.2/datasetBuilder/dictionaries
+NETHIC.2/datasetBuilder/dictionaries*
 NETHIC.2/datasetBuilder/datasets_parziali
 NETHIC.2/datasetBuilder/enwiki_dbow
 NETHIC.2/datasetBuilder/dataframes
@@ -11,3 +13,4 @@ NETHIC.2/datasetBuilder/dataframes_BOW
 NETHIC.2/training_single_NN/results_single_NN_doc2vec-BOW/*
 NETHIC.2/training_single_NN/results_single_NN_doc2vec/*
 NETHIC.2/training_single_NN/results_single_NN_BOW/*
+*.pkl
