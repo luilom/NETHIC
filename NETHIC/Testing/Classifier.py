@@ -43,7 +43,7 @@ def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries,categor
 		vectorizer = CountVectorizer(decode_error="replace",stop_words='english',vocabulary=dictionary,analyzer=stemmed_words_count)
 	
 
-		X_testGlobal = vectorizer.fit_transform(data_test.data)
+		X_testGlobal = vectorizer.transform(data_test.data)
 		
 		y_testGlobal = data_test.target
 		"""print("n_samples: %d, n_features: %d" % X_test.shape)"""

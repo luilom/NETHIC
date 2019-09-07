@@ -3,7 +3,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 import os
 from tqdm import tqdm
-from gensim.models.doc2vec import Doc2Vec
 from nltk.tokenize import word_tokenize
 import re
 from sklearn.feature_extraction.text import CountVectorizer
@@ -12,12 +11,6 @@ from sklearn.datasets import load_files
 import numpy as np
 import pickle
 from sklearn.utils import Bunch
-from scipy.sparse import csr_matrix
-
-def from_vector_to_csr_matrix(data, num_row, num_col):
-    matrix = csr_matrix((data, (num_row, num_col)))
-    
-
 
 def stemmed_words_count(doc):
     stemmer = EnglishStemmer()
@@ -39,15 +32,13 @@ def bow_extractor(folder,category):
     vectorizer = CountVectorizer(decode_error="replace",stop_words='english',analyzer=stemmed_words_count)
     dataset_vectorized = vectorizer.fit_transform(dataset.data)
     """Save vectorizer in file .pickle"""
-    pickle.dump(vectorizer.vocabulary_,open("dictionaries_doc2vec-BOW/dict_"+str(category)+".pkl","wb"))
+    pickle.dump(vectorizer.vocabulary_,open("dictionaries_BOW/dict_"+str(category)+".pkl","wb"))
     return vectorizer
 
 def removeDigit(sentence):
         return re.sub("\_\d+", "", sentence)
 
 
-logging.info("Loading Doc2Vec model")
-doc2vec = Doc2Vec.load("enwiki_dbow/doc2vec.bin")
 columns = ["filename","text","vector","label"]
 path_dataset_train = 'datasets/datasets_training_test_singole_reti'
 datasets = dict()
@@ -73,11 +64,11 @@ for key in tqdm(datasets.keys()):
             current_item.append(filename)
             current_item.append(current_text)
             dataToBunch = Bunch(data=[current_text],filenames="",target="")
-            current_item.append(np.concatenate((doc2vec.infer_vector(current_text.split()),np.array(vectorizer.transform(dataToBunch.data).toarray()[0])),axis = None))
+            current_item.append(np.array(vectorizer.transform(dataToBunch.data).toarray())[0])
             current_item.append(dirpath.split("/")[len(dirpath.split("/"))-1])
             current_dataframe.append(current_item)
             doc_counter += 1
-    pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes_doc2vec-BOW/single_categories/"+str(key)+".pkl")
+    pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes_BOW/single_categories/"+str(key)+".pkl")
 
 
 

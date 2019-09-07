@@ -35,7 +35,7 @@ for key in tqdm(datasets.keys()):
                         current_item.append(model3DBOW.infer_vector(current_text.split()))
                         current_item.append(dirpath.split("/")[len(dirpath.split("/"))-1])
                         current_dataframe.append(current_item)
-        pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes/single_categories/"+str(key)+".pkl")
+        pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes_doc2vec/single_categories/"+str(key)+".pkl")
         #pd.DataFrame(current_dataframe, columns = columns).to_csv("dataframes/single_categories/"+str(key)+".csv")
 
 logging.info("Start with datasets for Hierarchical structure")
@@ -53,7 +53,7 @@ for (dirpath, dirnames, filenames) in os.walk(path_dataset_hierarchical_model):
                 current_item.append(model3DBOW.infer_vector(current_text.split()))
                 current_item.append(re.sub("\_\d+", "", filename))
                 current_dataframe.append(current_item)
-pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes/hierarchical/hierarchical_model.pkl")
+pd.DataFrame(current_dataframe, columns = columns).to_pickle("dataframes_doc2vec/hierarchical/hierarchical_model.pkl")
 #pd.DataFrame(current_dataframe, columns = columns).to_csv("dataframes/hierarchical/hierarchical_model.csv")
 
 
