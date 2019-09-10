@@ -8,14 +8,18 @@ if "doc2vec-bow" in training_type:
     dataframe_folder = "dataframes_doc2vec-BOW"
     folder_to_save_NN = "results_single_NN_doc2vec-BOW"
     logger_file = "logger_doc2vec-BOW.log"
+    neural_networks_folder = "neural_networks/bow-doc2vec_NNs"
 elif "doc2vec" in training_type:
     dataframe_folder = "dataframes_doc2vec"
     folder_to_save_NN = "results_single_NN_doc2vec"
     logger_file = "logger_doc2vec.log"
+    neural_networks_folder = "neural_networks/doc2vec_NNs"
 else:
     dataframe_folder = "dataframes_BOW"
     folder_to_save_NN = "results_single_NN_BOW"
     logger_file = "logger_BOW.log"
+    neural_networks_folder = "neural_networks/bow_NNs"
+
 
 #filename=logger_file,
 logging.basicConfig(filename=logger_file,level=logging.INFO, format='%(asctime)-15s %(levelname)s %(filename)s %(message)s')
@@ -99,6 +103,7 @@ for category in categories:
     output1.close()
     logging.info("CURRENT RESULTS FOR CATEGORY : {} are \n {}".format(category,current_results))
     results_all_categories[category] = current_results
+    pickle.dump(clf,open(neural_networks_folder+"/NN_"+str(category)+".pkl","wb"))
     print(current_results)
 
 
