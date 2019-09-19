@@ -18,7 +18,6 @@ def from_vector_to_csr_matrix(data, num_row, num_col):
     matrix = csr_matrix((data, (num_row, num_col)))
     
 
-
 def stemmed_words_count(doc):
     stemmer = EnglishStemmer()
     analyzer = CountVectorizer(stop_words='english').build_analyzer()

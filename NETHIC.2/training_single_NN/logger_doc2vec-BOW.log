@@ -463,3 +463,468 @@
 2019-09-07 22:10:26,992 INFO training.py CURRENT RESULTS FOR CATEGORY : shopping are 
  {'avg_accuracy_training_test_k_fold_cv': 0.8753820033955856, 'training_accuracies': 0.9818607372732592, 'test_accuracies': 0.9, 'f1_score': array([0.9010989 , 0.85393258, 0.86597938, 0.97087379]), 'precision': array([0.85416667, 0.9047619 , 0.85714286, 0.98039216]), 'recall': array([0.95348837, 0.80851064, 0.875     , 0.96153846])}
 2019-09-07 22:10:26,997 INFO training.py Save results all categories on file results_single_NN_doc2vec-BOW/results_all_categories.pkl
+2019-09-10 21:29:15,930 INFO training.py Loading categories from json file
+2019-09-10 21:29:15,931 INFO training.py Reading types of training between doc2vec or doc2vec-bow
+2019-09-10 21:29:15,931 INFO training.py Loading dataframe for current category : pets
+2019-09-10 21:29:21,944 INFO training.py Dataset normalization
+2019-09-10 21:29:21,944 INFO training.py Splitting dataset in train and test
+2019-09-10 21:29:21,945 INFO training.py Cross validation fold : 1
+2019-09-10 21:29:21,945 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:29:28,055 INFO training.py Start Training
+2019-09-10 21:30:28,939 INFO training.py Cross validation fold : 2
+2019-09-10 21:30:28,939 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:30:34,960 INFO training.py Start Training
+2019-09-10 21:31:33,475 INFO training.py Cross validation fold : 3
+2019-09-10 21:31:33,476 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:31:39,245 INFO training.py Start Training
+2019-09-10 21:32:35,935 INFO training.py Cross validation fold : 4
+2019-09-10 21:32:35,936 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:32:41,920 INFO training.py Start Training
+2019-09-10 21:33:37,253 INFO training.py Cross validation fold : 5
+2019-09-10 21:33:37,253 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:33:43,281 INFO training.py Start Training
+2019-09-10 21:34:41,867 INFO training.py Training model on training dataset
+2019-09-10 21:35:52,490 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:35:55,537 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/pets_results.pkl
+2019-09-10 21:35:55,545 INFO training.py CURRENT RESULTS FOR CATEGORY : pets are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8599064215163512, 'training_accuracies': 0.980608492143096, 'test_accuracies': 0.8408408408408409, 'f1_score': array([0.72868217, 0.88607595, 0.79279279, 0.88235294, 0.88311688,
+       0.94871795, 0.84444444]), 'precision': array([0.78333333, 0.92105263, 0.77192982, 0.83333333, 0.82926829,
+       0.97368421, 0.84444444]), 'recall': array([0.68115942, 0.85365854, 0.81481481, 0.9375    , 0.94444444,
+       0.925     , 0.84444444])}
+2019-09-10 21:35:55,691 INFO training.py Loading dataframe for current category : automotive_and_vehicles
+2019-09-10 21:35:58,937 INFO training.py Dataset normalization
+2019-09-10 21:35:58,937 INFO training.py Splitting dataset in train and test
+2019-09-10 21:35:59,716 INFO training.py Cross validation fold : 1
+2019-09-10 21:35:59,716 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:36:02,380 INFO training.py Start Training
+2019-09-10 21:36:26,568 INFO training.py Cross validation fold : 2
+2019-09-10 21:36:26,568 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:36:29,466 INFO training.py Start Training
+2019-09-10 21:36:54,134 INFO training.py Cross validation fold : 3
+2019-09-10 21:36:54,134 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:36:56,481 INFO training.py Start Training
+2019-09-10 21:37:20,765 INFO training.py Cross validation fold : 4
+2019-09-10 21:37:20,765 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:37:23,745 INFO training.py Start Training
+2019-09-10 21:37:48,660 INFO training.py Cross validation fold : 5
+2019-09-10 21:37:48,661 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:37:51,340 INFO training.py Start Training
+2019-09-10 21:38:16,179 INFO training.py Training model on training dataset
+2019-09-10 21:38:52,984 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:38:54,696 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/automotive_and_vehicles_results.pkl
+2019-09-10 21:38:54,705 INFO training.py CURRENT RESULTS FOR CATEGORY : automotive_and_vehicles are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8219066937119676, 'training_accuracies': 0.9728194726166328, 'test_accuracies': 0.8248175182481752, 'f1_score': array([0.90566038, 0.95348837, 0.75      , 0.78181818, 0.70833333,
+       0.76      , 0.76923077, 0.83544304]), 'precision': array([0.92307692, 0.93181818, 1.        , 0.74137931, 0.66666667,
+       0.86363636, 0.71428571, 0.89189189]), 'recall': array([0.88888889, 0.97619048, 0.6       , 0.82692308, 0.75555556,
+       0.67857143, 0.83333333, 0.78571429])}
+2019-09-10 21:38:54,768 INFO training.py Loading dataframe for current category : govt_and_politics
+2019-09-10 21:38:57,344 INFO training.py Dataset normalization
+2019-09-10 21:38:57,344 INFO training.py Splitting dataset in train and test
+2019-09-10 21:38:57,793 INFO training.py Cross validation fold : 1
+2019-09-10 21:38:57,793 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:39:01,214 INFO training.py Start Training
+2019-09-10 21:39:20,404 INFO training.py Cross validation fold : 2
+2019-09-10 21:39:20,404 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:39:23,139 INFO training.py Start Training
+2019-09-10 21:39:42,509 INFO training.py Cross validation fold : 3
+2019-09-10 21:39:42,509 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:39:45,250 INFO training.py Start Training
+2019-09-10 21:40:05,294 INFO training.py Cross validation fold : 4
+2019-09-10 21:40:05,294 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:40:07,987 INFO training.py Start Training
+2019-09-10 21:40:27,719 INFO training.py Cross validation fold : 5
+2019-09-10 21:40:27,719 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:40:30,044 INFO training.py Start Training
+2019-09-10 21:40:48,687 INFO training.py Training model on training dataset
+2019-09-10 21:41:16,975 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:41:18,651 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/govt_and_politics_results.pkl
+2019-09-10 21:41:18,659 INFO training.py CURRENT RESULTS FOR CATEGORY : govt_and_politics are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7990632318501172, 'training_accuracies': 0.9878220140515223, 'test_accuracies': 0.7689075630252101, 'f1_score': array([0.82222222, 0.75728155, 0.85436893, 0.71428571, 0.6875    ]), 'precision': array([0.78723404, 0.78      , 0.88      , 0.71428571, 0.67346939]), 'recall': array([0.86046512, 0.73584906, 0.83018868, 0.71428571, 0.70212766])}
+2019-09-10 21:41:18,701 INFO training.py Loading dataframe for current category : home_and_garden
+2019-09-10 21:41:21,471 INFO training.py Dataset normalization
+2019-09-10 21:41:21,471 INFO training.py Splitting dataset in train and test
+2019-09-10 21:41:21,851 INFO training.py Cross validation fold : 1
+2019-09-10 21:41:21,851 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:41:24,279 INFO training.py Start Training
+2019-09-10 21:41:45,940 INFO training.py Cross validation fold : 2
+2019-09-10 21:41:45,940 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:41:49,159 INFO training.py Start Training
+2019-09-10 21:42:10,252 INFO training.py Cross validation fold : 3
+2019-09-10 21:42:10,253 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:42:12,969 INFO training.py Start Training
+2019-09-10 21:42:34,742 INFO training.py Cross validation fold : 4
+2019-09-10 21:42:34,743 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:42:37,682 INFO training.py Start Training
+2019-09-10 21:42:58,855 INFO training.py Cross validation fold : 5
+2019-09-10 21:42:58,855 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:43:01,787 INFO training.py Start Training
+2019-09-10 21:43:23,591 INFO training.py Training model on training dataset
+2019-09-10 21:43:53,346 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:43:55,090 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/home_and_garden_results.pkl
+2019-09-10 21:43:55,096 INFO training.py CURRENT RESULTS FOR CATEGORY : home_and_garden are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8560706401766003, 'training_accuracies': 0.9788079470198675, 'test_accuracies': 0.8134920634920635, 'f1_score': array([0.88095238, 0.82758621, 0.77477477, 0.77477477, 0.88372093,
+       0.77108434]), 'precision': array([0.84090909, 0.85714286, 0.75438596, 0.81132075, 0.9047619 ,
+       0.76190476]), 'recall': array([0.925     , 0.8       , 0.7962963 , 0.74137931, 0.86363636,
+       0.7804878 ])}
+2019-09-10 21:43:55,139 INFO training.py Loading dataframe for current category : education
+2019-09-10 21:43:56,263 INFO training.py Dataset normalization
+2019-09-10 21:43:56,263 INFO training.py Splitting dataset in train and test
+2019-09-10 21:43:56,671 INFO training.py Cross validation fold : 1
+2019-09-10 21:43:56,671 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:43:57,687 INFO training.py Start Training
+2019-09-10 21:44:05,814 INFO training.py Cross validation fold : 2
+2019-09-10 21:44:05,814 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:44:07,245 INFO training.py Start Training
+2019-09-10 21:44:15,042 INFO training.py Cross validation fold : 3
+2019-09-10 21:44:15,042 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:44:16,571 INFO training.py Start Training
+2019-09-10 21:44:24,233 INFO training.py Cross validation fold : 4
+2019-09-10 21:44:24,233 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:44:25,456 INFO training.py Start Training
+2019-09-10 21:44:33,200 INFO training.py Cross validation fold : 5
+2019-09-10 21:44:33,200 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:44:34,406 INFO training.py Start Training
+2019-09-10 21:44:42,537 INFO training.py Training model on training dataset
+2019-09-10 21:44:53,111 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:44:53,834 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/education_results.pkl
+2019-09-10 21:44:53,846 INFO training.py CURRENT RESULTS FOR CATEGORY : education are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7971631205673759, 'training_accuracies': 0.9815602836879432, 'test_accuracies': 0.8280254777070064, 'f1_score': array([0.7755102 , 0.91111111, 0.81818182, 0.7816092 ]), 'precision': array([0.79166667, 0.93181818, 0.81818182, 0.75555556]), 'recall': array([0.76      , 0.89130435, 0.81818182, 0.80952381])}
+2019-09-10 21:44:53,868 INFO training.py Loading dataframe for current category : family_and_parenting
+2019-09-10 21:44:56,712 INFO training.py Dataset normalization
+2019-09-10 21:44:56,712 INFO training.py Splitting dataset in train and test
+2019-09-10 21:44:56,892 INFO training.py Cross validation fold : 1
+2019-09-10 21:44:56,892 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:45:00,120 INFO training.py Start Training
+2019-09-10 21:45:22,891 INFO training.py Cross validation fold : 2
+2019-09-10 21:45:22,891 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:45:26,251 INFO training.py Start Training
+2019-09-10 21:45:48,971 INFO training.py Cross validation fold : 3
+2019-09-10 21:45:48,972 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:45:51,681 INFO training.py Start Training
+2019-09-10 21:46:14,965 INFO training.py Cross validation fold : 4
+2019-09-10 21:46:14,965 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:46:18,446 INFO training.py Start Training
+2019-09-10 21:46:41,139 INFO training.py Cross validation fold : 5
+2019-09-10 21:46:41,140 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:46:44,480 INFO training.py Start Training
+2019-09-10 21:47:07,735 INFO training.py Training model on training dataset
+2019-09-10 21:47:41,527 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:47:43,205 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/family_and_parenting_results.pkl
+2019-09-10 21:47:43,213 INFO training.py CURRENT RESULTS FOR CATEGORY : family_and_parenting are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7826309794988611, 'training_accuracies': 0.9831741700773079, 'test_accuracies': 0.7959183673469388, 'f1_score': array([0.74157303, 0.83870968, 0.93506494, 0.73076923, 0.81132075,
+       0.57142857]), 'precision': array([0.76744186, 0.84782609, 0.92307692, 0.67857143, 0.86      ,
+       0.54545455]), 'recall': array([0.7173913 , 0.82978723, 0.94736842, 0.79166667, 0.76785714,
+       0.6       ])}
+2019-09-10 21:47:43,264 INFO training.py Loading dataframe for current category : technology_and_computing
+2019-09-10 21:47:50,257 INFO training.py Dataset normalization
+2019-09-10 21:47:50,257 INFO training.py Splitting dataset in train and test
+2019-09-10 21:47:50,715 INFO training.py Cross validation fold : 1
+2019-09-10 21:47:50,715 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:47:57,421 INFO training.py Start Training
+2019-09-10 21:49:01,239 INFO training.py Cross validation fold : 2
+2019-09-10 21:49:01,239 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:49:08,316 INFO training.py Start Training
+2019-09-10 21:50:09,798 INFO training.py Cross validation fold : 3
+2019-09-10 21:50:09,798 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:50:17,168 INFO training.py Start Training
+2019-09-10 21:51:18,495 INFO training.py Cross validation fold : 4
+2019-09-10 21:51:18,495 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:51:25,654 INFO training.py Start Training
+2019-09-10 21:52:25,751 INFO training.py Cross validation fold : 5
+2019-09-10 21:52:25,751 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:52:32,866 INFO training.py Start Training
+2019-09-10 21:53:35,466 INFO training.py Training model on training dataset
+2019-09-10 21:54:51,742 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:54:55,286 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/technology_and_computing_results.pkl
+2019-09-10 21:54:55,297 INFO training.py CURRENT RESULTS FOR CATEGORY : technology_and_computing are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7295385132673933, 'training_accuracies': 0.9740518962075848, 'test_accuracies': 0.742152466367713, 'f1_score': array([0.65420561, 0.75      , 0.72727273, 0.65306122, 0.75609756,
+       0.69662921, 0.76767677, 0.88888889, 0.68686869, 0.84444444]), 'precision': array([0.68627451, 0.72      , 0.85714286, 0.68085106, 0.75609756,
+       0.65957447, 0.73076923, 0.84615385, 0.75555556, 0.80851064]), 'recall': array([0.625     , 0.7826087 , 0.63157895, 0.62745098, 0.75609756,
+       0.73809524, 0.80851064, 0.93617021, 0.62962963, 0.88372093])}
+2019-09-10 21:54:55,353 INFO training.py Loading dataframe for current category : food_and_drink
+2019-09-10 21:54:59,134 INFO training.py Dataset normalization
+2019-09-10 21:54:59,135 INFO training.py Splitting dataset in train and test
+2019-09-10 21:55:00,184 INFO training.py Cross validation fold : 1
+2019-09-10 21:55:00,184 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:55:04,509 INFO training.py Start Training
+2019-09-10 21:55:37,596 INFO training.py Cross validation fold : 2
+2019-09-10 21:55:37,597 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:55:41,470 INFO training.py Start Training
+2019-09-10 21:56:14,682 INFO training.py Cross validation fold : 3
+2019-09-10 21:56:14,682 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:56:18,492 INFO training.py Start Training
+2019-09-10 21:56:51,685 INFO training.py Cross validation fold : 4
+2019-09-10 21:56:51,685 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:56:56,042 INFO training.py Start Training
+2019-09-10 21:57:30,106 INFO training.py Cross validation fold : 5
+2019-09-10 21:57:30,106 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:57:34,449 INFO training.py Start Training
+2019-09-10 21:58:07,979 INFO training.py Training model on training dataset
+2019-09-10 21:58:50,870 INFO training.py Start to test model and evaluate scores
+2019-09-10 21:58:55,246 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/food_and_drink_results.pkl
+2019-09-10 21:58:55,252 INFO training.py CURRENT RESULTS FOR CATEGORY : food_and_drink are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8106900280214425, 'training_accuracies': 0.9824355971896955, 'test_accuracies': 0.8350877192982457, 'f1_score': array([0.86666667, 0.87128713, 0.77083333, 0.77894737, 0.79487179,
+       0.90909091]), 'precision': array([0.84782609, 0.8627451 , 0.80434783, 0.80434783, 0.81578947,
+       0.86206897]), 'recall': array([0.88636364, 0.88      , 0.74      , 0.75510204, 0.775     ,
+       0.96153846])}
+2019-09-10 21:58:55,306 INFO training.py Loading dataframe for current category : society
+2019-09-10 21:59:06,372 INFO training.py Dataset normalization
+2019-09-10 21:59:06,372 INFO training.py Splitting dataset in train and test
+2019-09-10 21:59:07,038 INFO training.py Cross validation fold : 1
+2019-09-10 21:59:07,038 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 21:59:16,862 INFO training.py Start Training
+2019-09-10 22:00:17,489 INFO training.py Cross validation fold : 2
+2019-09-10 22:00:17,489 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:00:25,920 INFO training.py Start Training
+2019-09-10 22:01:29,461 INFO training.py Cross validation fold : 3
+2019-09-10 22:01:29,461 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:01:38,088 INFO training.py Start Training
+2019-09-10 22:02:39,686 INFO training.py Cross validation fold : 4
+2019-09-10 22:02:39,686 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:02:48,328 INFO training.py Start Training
+2019-09-10 22:03:51,439 INFO training.py Cross validation fold : 5
+2019-09-10 22:03:51,440 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:03:59,681 INFO training.py Start Training
+2019-09-10 22:05:01,297 INFO training.py Training model on training dataset
+2019-09-10 22:06:20,830 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:06:25,362 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/society_results.pkl
+2019-09-10 22:06:25,369 INFO training.py CURRENT RESULTS FOR CATEGORY : society are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7931806144067797, 'training_accuracies': 0.9856733524355301, 'test_accuracies': 0.7681498829039812, 'f1_score': array([0.64583333, 0.83168317, 0.72527473, 0.8       , 0.71264368,
+       0.85416667, 0.79166667, 0.76315789, 0.77358491]), 'precision': array([0.73809524, 0.85714286, 0.70212766, 0.875     , 0.67391304,
+       0.82      , 0.82608696, 0.76315789, 0.67213115]), 'recall': array([0.57407407, 0.80769231, 0.75      , 0.73684211, 0.75609756,
+       0.89130435, 0.76      , 0.76315789, 0.91111111])}
+2019-09-10 22:06:25,458 INFO training.py Loading dataframe for current category : root
+2019-09-10 22:07:17,986 INFO training.py Dataset normalization
+2019-09-10 22:07:17,990 INFO training.py Splitting dataset in train and test
+2019-09-10 22:07:32,825 INFO training.py Cross validation fold : 1
+2019-09-10 22:07:32,826 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:09:29,175 INFO training.py Start Training
+2019-09-10 22:12:55,363 INFO training.py Cross validation fold : 2
+2019-09-10 22:12:55,364 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:13:47,635 INFO training.py Start Training
+2019-09-10 22:17:09,527 INFO training.py Cross validation fold : 3
+2019-09-10 22:17:09,528 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:17:52,719 INFO training.py Start Training
+2019-09-10 22:21:16,124 INFO training.py Cross validation fold : 4
+2019-09-10 22:21:16,124 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:21:56,232 INFO training.py Start Training
+2019-09-10 22:25:22,180 INFO training.py Cross validation fold : 5
+2019-09-10 22:25:22,180 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:26:15,555 INFO training.py Start Training
+2019-09-10 22:29:43,439 INFO training.py Training model on training dataset
+2019-09-10 22:34:11,267 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:34:40,990 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/root_results.pkl
+2019-09-10 22:34:41,076 INFO training.py CURRENT RESULTS FOR CATEGORY : root are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7413996746917855, 'training_accuracies': 0.9811001042752867, 'test_accuracies': 0.7420867526377491, 'f1_score': array([0.70731707, 0.91666667, 0.59459459, 0.91111111, 0.71428571,
+       0.53333333, 0.87804878, 0.7826087 , 0.60526316, 0.67647059,
+       0.57142857, 0.84782609, 0.74782609, 0.66666667, 0.59459459,
+       0.77419355, 0.61111111, 0.83950617, 0.87378641, 0.68656716,
+       0.90909091]), 'precision': array([0.69047619, 0.94285714, 0.66666667, 0.89130435, 0.80645161,
+       0.51282051, 0.9       , 0.87804878, 0.575     , 0.6969697 ,
+       0.64285714, 0.86666667, 0.65151515, 0.55932203, 0.62857143,
+       0.7826087 , 0.64705882, 0.85      , 0.9       , 0.65714286,
+       0.85714286]), 'recall': array([0.725     , 0.89189189, 0.53658537, 0.93181818, 0.64102564,
+       0.55555556, 0.85714286, 0.70588235, 0.63888889, 0.65714286,
+       0.51428571, 0.82978723, 0.87755102, 0.825     , 0.56410256,
+       0.76595745, 0.57894737, 0.82926829, 0.8490566 , 0.71875   ,
+       0.96774194])}
+2019-09-10 22:34:41,783 INFO training.py Loading dataframe for current category : science
+2019-09-10 22:35:01,804 INFO training.py Dataset normalization
+2019-09-10 22:35:01,804 INFO training.py Splitting dataset in train and test
+2019-09-10 22:35:11,784 INFO training.py Cross validation fold : 1
+2019-09-10 22:35:11,784 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:35:20,343 INFO training.py Start Training
+2019-09-10 22:36:01,224 INFO training.py Cross validation fold : 2
+2019-09-10 22:36:01,225 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:36:09,513 INFO training.py Start Training
+2019-09-10 22:36:52,766 INFO training.py Cross validation fold : 3
+2019-09-10 22:36:52,766 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:37:00,283 INFO training.py Start Training
+2019-09-10 22:37:42,408 INFO training.py Cross validation fold : 4
+2019-09-10 22:37:42,408 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:37:52,780 INFO training.py Start Training
+2019-09-10 22:38:38,072 INFO training.py Cross validation fold : 5
+2019-09-10 22:38:38,072 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:38:46,550 INFO training.py Start Training
+2019-09-10 22:39:28,328 INFO training.py Training model on training dataset
+2019-09-10 22:40:19,790 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:40:25,019 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/science_results.pkl
+2019-09-10 22:40:25,031 INFO training.py CURRENT RESULTS FOR CATEGORY : science are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8342725666625579, 'training_accuracies': 0.9805711610486891, 'test_accuracies': 0.8210526315789474, 'f1_score': array([0.7027027 , 0.86792453, 0.70967742, 0.84705882, 0.86363636,
+       0.85057471, 0.86075949, 0.86      , 0.80733945, 0.86956522]), 'precision': array([0.67241379, 0.90196078, 0.6875    , 0.8372093 , 0.9047619 ,
+       0.88095238, 0.77272727, 0.82692308, 0.88      , 0.88888889]), 'recall': array([0.73584906, 0.83636364, 0.73333333, 0.85714286, 0.82608696,
+       0.82222222, 0.97142857, 0.89583333, 0.74576271, 0.85106383])}
+2019-09-10 22:40:25,131 INFO training.py Loading dataframe for current category : health_and_fitness
+2019-09-10 22:40:36,848 INFO training.py Dataset normalization
+2019-09-10 22:40:36,848 INFO training.py Splitting dataset in train and test
+2019-09-10 22:40:38,427 INFO training.py Cross validation fold : 1
+2019-09-10 22:40:38,427 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:40:47,094 INFO training.py Start Training
+2019-09-10 22:41:49,271 INFO training.py Cross validation fold : 2
+2019-09-10 22:41:49,271 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:41:57,489 INFO training.py Start Training
+2019-09-10 22:43:01,152 INFO training.py Cross validation fold : 3
+2019-09-10 22:43:01,152 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:43:09,687 INFO training.py Start Training
+2019-09-10 22:44:13,077 INFO training.py Cross validation fold : 4
+2019-09-10 22:44:13,077 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:44:20,995 INFO training.py Start Training
+2019-09-10 22:45:27,050 INFO training.py Cross validation fold : 5
+2019-09-10 22:45:27,050 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:45:34,490 INFO training.py Start Training
+2019-09-10 22:46:36,849 INFO training.py Training model on training dataset
+2019-09-10 22:47:54,124 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:47:58,670 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/health_and_fitness_results.pkl
+2019-09-10 22:47:58,683 INFO training.py CURRENT RESULTS FOR CATEGORY : health_and_fitness are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.7860843805167599, 'training_accuracies': 0.9725866916588566, 'test_accuracies': 0.7621052631578947, 'f1_score': array([0.87619048, 0.65306122, 0.89583333, 0.79569892, 0.84705882,
+       0.68041237, 0.79591837, 0.73913043, 0.65346535, 0.68235294]), 'precision': array([0.88461538, 0.72727273, 0.89583333, 0.84090909, 0.76595745,
+       0.6875    , 0.76470588, 0.68      , 0.63461538, 0.74358974]), 'recall': array([0.86792453, 0.59259259, 0.89583333, 0.75510204, 0.94736842,
+       0.67346939, 0.82978723, 0.80952381, 0.67346939, 0.63043478])}
+2019-09-10 22:47:58,773 INFO training.py Loading dataframe for current category : religion_and_spirituality
+2019-09-10 22:48:04,742 INFO training.py Dataset normalization
+2019-09-10 22:48:04,742 INFO training.py Splitting dataset in train and test
+2019-09-10 22:48:06,329 INFO training.py Cross validation fold : 1
+2019-09-10 22:48:06,329 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:48:10,314 INFO training.py Start Training
+2019-09-10 22:48:35,897 INFO training.py Cross validation fold : 2
+2019-09-10 22:48:35,897 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:48:42,315 INFO training.py Start Training
+2019-09-10 22:49:09,568 INFO training.py Cross validation fold : 3
+2019-09-10 22:49:09,568 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:49:13,649 INFO training.py Start Training
+2019-09-10 22:49:38,992 INFO training.py Cross validation fold : 4
+2019-09-10 22:49:38,993 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:49:43,000 INFO training.py Start Training
+2019-09-10 22:50:08,921 INFO training.py Cross validation fold : 5
+2019-09-10 22:50:08,921 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:50:13,321 INFO training.py Start Training
+2019-09-10 22:50:38,457 INFO training.py Training model on training dataset
+2019-09-10 22:51:08,902 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:51:11,599 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/religion_and_spirituality_results.pkl
+2019-09-10 22:51:11,608 INFO training.py CURRENT RESULTS FOR CATEGORY : religion_and_spirituality are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8760233918128655, 'training_accuracies': 0.991812865497076, 'test_accuracies': 0.8421052631578947, 'f1_score': array([0.74698795, 0.86868687, 0.82882883, 0.8       , 0.90322581,
+       0.8988764 ]), 'precision': array([0.79487179, 0.87755102, 0.82142857, 0.79166667, 0.875     ,
+       0.88888889]), 'recall': array([0.70454545, 0.86      , 0.83636364, 0.80851064, 0.93333333,
+       0.90909091])}
+2019-09-10 22:51:11,760 INFO training.py Loading dataframe for current category : art_and_entertainment
+2019-09-10 22:51:20,904 INFO training.py Dataset normalization
+2019-09-10 22:51:20,904 INFO training.py Splitting dataset in train and test
+2019-09-10 22:51:21,715 INFO training.py Cross validation fold : 1
+2019-09-10 22:51:21,715 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:51:29,186 INFO training.py Start Training
+2019-09-10 22:52:09,604 INFO training.py Cross validation fold : 2
+2019-09-10 22:52:09,604 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:52:17,554 INFO training.py Start Training
+2019-09-10 22:52:59,105 INFO training.py Cross validation fold : 3
+2019-09-10 22:52:59,105 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:53:06,667 INFO training.py Start Training
+2019-09-10 22:53:47,062 INFO training.py Cross validation fold : 4
+2019-09-10 22:53:47,062 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:53:54,592 INFO training.py Start Training
+2019-09-10 22:54:36,364 INFO training.py Cross validation fold : 5
+2019-09-10 22:54:36,364 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:54:43,915 INFO training.py Start Training
+2019-09-10 22:55:26,500 INFO training.py Training model on training dataset
+2019-09-10 22:56:18,983 INFO training.py Start to test model and evaluate scores
+2019-09-10 22:56:23,625 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/art_and_entertainment_results.pkl
+2019-09-10 22:56:23,637 INFO training.py CURRENT RESULTS FOR CATEGORY : art_and_entertainment are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8317717393140021, 'training_accuracies': 0.9867394695787831, 'test_accuracies': 0.852803738317757, 'f1_score': array([0.85470085, 0.86021505, 0.86868687, 0.89583333, 0.775     ,
+       0.95238095, 0.82758621, 0.80898876, 0.82882883]), 'precision': array([0.79365079, 0.85106383, 0.89583333, 0.91489362, 0.83783784,
+       0.97560976, 0.87804878, 0.8372093 , 0.75409836]), 'recall': array([0.92592593, 0.86956522, 0.84313725, 0.87755102, 0.72093023,
+       0.93023256, 0.7826087 , 0.7826087 , 0.92      ])}
+2019-09-10 22:56:23,729 INFO training.py Loading dataframe for current category : business_and_industrial
+2019-09-10 22:56:32,818 INFO training.py Dataset normalization
+2019-09-10 22:56:32,818 INFO training.py Splitting dataset in train and test
+2019-09-10 22:56:34,305 INFO training.py Cross validation fold : 1
+2019-09-10 22:56:34,305 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:56:40,372 INFO training.py Start Training
+2019-09-10 22:57:14,670 INFO training.py Cross validation fold : 2
+2019-09-10 22:57:14,670 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:57:20,879 INFO training.py Start Training
+2019-09-10 22:57:55,238 INFO training.py Cross validation fold : 3
+2019-09-10 22:57:55,238 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:58:01,217 INFO training.py Start Training
+2019-09-10 22:58:35,981 INFO training.py Cross validation fold : 4
+2019-09-10 22:58:35,981 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:58:41,986 INFO training.py Start Training
+2019-09-10 22:59:16,636 INFO training.py Cross validation fold : 5
+2019-09-10 22:59:16,637 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 22:59:22,105 INFO training.py Start Training
+2019-09-10 22:59:56,111 INFO training.py Training model on training dataset
+2019-09-10 23:00:38,257 INFO training.py Start to test model and evaluate scores
+2019-09-10 23:00:42,076 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/business_and_industrial_results.pkl
+2019-09-10 23:00:42,089 INFO training.py CURRENT RESULTS FOR CATEGORY : business_and_industrial are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8626073499133072, 'training_accuracies': 0.9781420765027322, 'test_accuracies': 0.8504672897196262, 'f1_score': array([0.95495495, 0.88073394, 0.875     , 0.90384615, 0.74468085,
+       0.70967742, 0.80412371, 0.87671233, 0.88607595]), 'precision': array([0.96363636, 0.90566038, 0.875     , 0.94      , 0.67307692,
+       0.76744186, 0.76470588, 0.91428571, 0.85365854]), 'recall': array([0.94642857, 0.85714286, 0.875     , 0.87037037, 0.83333333,
+       0.66      , 0.84782609, 0.84210526, 0.92105263])}
+2019-09-10 23:00:42,160 INFO training.py Loading dataframe for current category : travel
+2019-09-10 23:00:42,765 INFO training.py Dataset normalization
+2019-09-10 23:00:42,765 INFO training.py Splitting dataset in train and test
+2019-09-10 23:00:43,931 INFO training.py Cross validation fold : 1
+2019-09-10 23:00:43,931 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:00:44,647 INFO training.py Start Training
+2019-09-10 23:00:48,516 INFO training.py Cross validation fold : 2
+2019-09-10 23:00:48,516 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:00:49,139 INFO training.py Start Training
+2019-09-10 23:00:53,228 INFO training.py Cross validation fold : 3
+2019-09-10 23:00:53,228 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:00:53,954 INFO training.py Start Training
+2019-09-10 23:00:58,217 INFO training.py Cross validation fold : 4
+2019-09-10 23:00:58,217 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:00:59,038 INFO training.py Start Training
+2019-09-10 23:01:04,056 INFO training.py Cross validation fold : 5
+2019-09-10 23:01:04,056 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:04,691 INFO training.py Start Training
+2019-09-10 23:01:08,590 INFO training.py Training model on training dataset
+2019-09-10 23:01:13,922 INFO training.py Start to test model and evaluate scores
+2019-09-10 23:01:14,324 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/travel_results.pkl
+2019-09-10 23:01:14,337 INFO training.py CURRENT RESULTS FOR CATEGORY : travel are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.9378592964824121, 'training_accuracies': 0.9899799599198397, 'test_accuracies': 0.918918918918919, 'f1_score': array([0.93203883, 0.88888889, 0.93023256, 0.83333333]), 'precision': array([0.94117647, 1.        , 0.88888889, 0.90909091]), 'recall': array([0.92307692, 0.8       , 0.97560976, 0.76923077])}
+2019-09-10 23:01:14,357 INFO training.py Loading dataframe for current category : finance
+2019-09-10 23:01:15,341 INFO training.py Dataset normalization
+2019-09-10 23:01:15,341 INFO training.py Splitting dataset in train and test
+2019-09-10 23:01:15,457 INFO training.py Cross validation fold : 1
+2019-09-10 23:01:15,458 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:16,229 INFO training.py Start Training
+2019-09-10 23:01:22,591 INFO training.py Cross validation fold : 2
+2019-09-10 23:01:22,592 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:23,531 INFO training.py Start Training
+2019-09-10 23:01:30,096 INFO training.py Cross validation fold : 3
+2019-09-10 23:01:30,096 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:31,050 INFO training.py Start Training
+2019-09-10 23:01:37,407 INFO training.py Cross validation fold : 4
+2019-09-10 23:01:37,407 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:38,515 INFO training.py Start Training
+2019-09-10 23:01:44,367 INFO training.py Cross validation fold : 5
+2019-09-10 23:01:44,367 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:01:45,264 INFO training.py Start Training
+2019-09-10 23:01:51,300 INFO training.py Training model on training dataset
+2019-09-10 23:01:59,158 INFO training.py Start to test model and evaluate scores
+2019-09-10 23:01:59,820 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/finance_results.pkl
+2019-09-10 23:01:59,831 INFO training.py CURRENT RESULTS FOR CATEGORY : finance are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8508766576041724, 'training_accuracies': 0.9910514541387024, 'test_accuracies': 0.88, 'f1_score': array([0.90384615, 0.92307692, 0.8372093 , 0.88659794]), 'precision': array([0.92156863, 1.        , 0.8372093 , 0.86      ]), 'recall': array([0.88679245, 0.85714286, 0.8372093 , 0.91489362])}
+2019-09-10 23:01:59,849 INFO training.py Loading dataframe for current category : shopping
+2019-09-10 23:02:01,652 INFO training.py Dataset normalization
+2019-09-10 23:02:01,652 INFO training.py Splitting dataset in train and test
+2019-09-10 23:02:01,859 INFO training.py Cross validation fold : 1
+2019-09-10 23:02:01,859 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:02:03,487 INFO training.py Start Training
+2019-09-10 23:02:12,606 INFO training.py Cross validation fold : 2
+2019-09-10 23:02:12,606 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:02:14,087 INFO training.py Start Training
+2019-09-10 23:02:23,502 INFO training.py Cross validation fold : 3
+2019-09-10 23:02:23,502 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:02:25,106 INFO training.py Start Training
+2019-09-10 23:02:34,237 INFO training.py Cross validation fold : 4
+2019-09-10 23:02:34,237 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:02:35,772 INFO training.py Start Training
+2019-09-10 23:02:45,236 INFO training.py Cross validation fold : 5
+2019-09-10 23:02:45,236 INFO training.py Splitting dataset in train and test for current cross validation
+2019-09-10 23:02:46,815 INFO training.py Start Training
+2019-09-10 23:02:55,948 INFO training.py Training model on training dataset
+2019-09-10 23:03:08,371 INFO training.py Start to test model and evaluate scores
+2019-09-10 23:03:09,238 INFO training.py Saving score on file : results_single_NN_doc2vec-BOW/shopping_results.pkl
+2019-09-10 23:03:09,250 INFO training.py CURRENT RESULTS FOR CATEGORY : shopping are 
+ {'avg_accuracy_training_test_k_fold_cv': 0.8742158426368952, 'training_accuracies': 0.9795201872440024, 'test_accuracies': 0.8947368421052632, 'f1_score': array([0.89130435, 0.84090909, 0.86597938, 0.97087379]), 'precision': array([0.83673469, 0.90243902, 0.85714286, 0.98039216]), 'recall': array([0.95348837, 0.78723404, 0.875     , 0.96153846])}
+2019-09-10 23:03:09,289 INFO training.py Save results all categories on file results_single_NN_doc2vec-BOW/results_all_categories.pkl

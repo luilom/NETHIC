@@ -172,7 +172,7 @@ for i in range(0,len(data_test.data)):
 
 
         newData_test = Bunch(data=data,filenames=data_test.filenames[i],target=data_test.target[i])
-        
+
         if "doc2vec" in model_type:
             text_embedded = doc2vec.infer_vector(data[0].split())
 
@@ -229,11 +229,11 @@ globalResults.append(currentResult)
 
 
 confuzionMatrixListdataframe = pandas.DataFrame(confusionMatrixList,columns=["predicted","expected"])
-confuzionMatrixListdataframe.to_csv("confusionMatrix_"+str(model_type)+".csv")
+#confuzionMatrixListdataframe.to_csv("confusionMatrix_"+str(model_type)+".csv")
 
 dataframeAccuracy = pandas.DataFrame(globalResults, columns=['cut','score','#Correct_document','#Total_document'])
 dataframeAccuracy.set_index("cut")
-dataframeAccuracy.to_csv("test_accuracy_global_"+str(model_type)+".csv")
+#dataframeAccuracy.to_csv("test_accuracy_global_"+str(model_type)+".csv")
 
     
 
