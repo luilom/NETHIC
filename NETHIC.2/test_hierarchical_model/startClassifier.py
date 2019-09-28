@@ -24,23 +24,23 @@ def stemmed_words_tfidf(doc):
 	return (stemmer.stem(w) for w in analyzer(doc))
 
 
-def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type):   
-    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type)
+def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type):   
+    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type)
     if result is not None:
         dictResults[startCategory] = result
         for result in dictResults[startCategory]:
-            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type)
+            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type)
         return dictResults
     return None
 
 
-def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type):
+def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type):
     isRoot = False
     if startCategory == "root":
         isRoot = True
     if int(currLevel) <= int(maxLevel):
         dictScores = dict()
-        categories =  Classifier.classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type)
+        categories =  Classifier.classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type)
         if categories is not None:
             for i in range(len(categories)):
                 dictScores[str(categories[i].label)] = categories[i]
@@ -115,9 +115,11 @@ model_type = sys.argv[4]
 if "doc2vec" in model_type:
     pathNN = '../training_single_NN/neural_networks/bow-doc2vec_NNs/'
     pathDict = '../datasetBuilder/dictionaries_doc2vec-BOW/'
+    pathNormalizers = '../training_single_NN/normalizers_doc2vec-bow'
 else:
     pathNN = '../training_single_NN/neural_networks/bow_NNs/'
     pathDict = '../datasetBuilder/dictionaries_BOW/'
+    pathNormalizers = '../training_single_NN/normalizers_bow'
     text_embedded = []
 
 categories = json.load(open("../categories.json"))
@@ -125,6 +127,7 @@ categories = json.load(open("../categories.json"))
 
 neuralNetworks = dict()
 dictionaries = dict()
+normalizers = dict()
 
 print("Start to load Neural Networks and Dictionaries")
 
@@ -135,6 +138,10 @@ for filename in os.listdir(pathNN):
 """CARICO I DIZIONARI"""
 for filename in os.listdir(pathDict):
     dictionaries[filename.replace(".pkl","").replace("dict_","")] = joblib.load(pathDict+"/"+filename)
+
+"""for filename in os.listdir(pathDict):
+    normalizers[filename.replace(".pkl","").replace("normalizer_","")] = joblib.load(pathNormalizers+"/"+filename)"""
+
 
 print("End to load Neural Networks and Dictionaries")
 
@@ -148,7 +155,7 @@ globalResults = list()
 
 
 #for cut in range(0,225,100):
-cut = 25
+cut = 1
 print("CUT: ---> "+str(cut))
 currentResult = list()
 numDocumentTaked = 0
@@ -179,7 +186,7 @@ for i in range(0,len(data_test.data)):
 
         while maxIter>0 and currentTollerance<tollerance:
             dictResults = dict()
-            dictResults = recursiveClassification(startCategory,0,levels,dictResults,i,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,text_embedded,model_type)
+            dictResults = recursiveClassification(startCategory,0,levels,dictResults,i,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,normalizers,text_embedded,model_type)
             cutoff = cutoff - round(0.1, 2)
             maxIter = maxIter-1
             results = dict()
@@ -229,11 +236,11 @@ globalResults.append(currentResult)
 
 
 confuzionMatrixListdataframe = pandas.DataFrame(confusionMatrixList,columns=["predicted","expected"])
-#confuzionMatrixListdataframe.to_csv("confusionMatrix_"+str(model_type)+".csv")
+confuzionMatrixListdataframe.to_csv("confusionMatrix_"+str(model_type)+".csv")
 
 dataframeAccuracy = pandas.DataFrame(globalResults, columns=['cut','score','#Correct_document','#Total_document'])
 dataframeAccuracy.set_index("cut")
-#dataframeAccuracy.to_csv("test_accuracy_global_"+str(model_type)+".csv")
+dataframeAccuracy.to_csv("test_accuracy_global_"+str(model_type)+".csv")
 
     
 

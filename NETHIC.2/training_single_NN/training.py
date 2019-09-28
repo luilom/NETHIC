@@ -9,16 +9,19 @@ if "doc2vec-bow" in training_type:
     folder_to_save_NN = "results_single_NN_doc2vec-BOW"
     logger_file = "logger_doc2vec-BOW.log"
     neural_networks_folder = "neural_networks/bow-doc2vec_NNs"
+    normalizers_folder = "normalizers_doc2vec-BOW"
 elif "doc2vec" in training_type:
     dataframe_folder = "dataframes_doc2vec"
     folder_to_save_NN = "results_single_NN_doc2vec"
     logger_file = "logger_doc2vec.log"
     neural_networks_folder = "neural_networks/doc2vec_NNs"
+    normalizers_folder = "normalizers_doc2vec"
 else:
     dataframe_folder = "dataframes_BOW"
     folder_to_save_NN = "results_single_NN_BOW"
     logger_file = "logger_BOW.log"
     neural_networks_folder = "neural_networks/bow_NNs"
+    normalizers_folder = "normalizers_bow"
 
 
 #filename=logger_file,
@@ -34,6 +37,8 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn import preprocessing
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 
 
 logging.info("Loading categories from json file")
@@ -58,7 +63,13 @@ for category in categories:
     y = le.transform(y)
 
     logging.info("Dataset normalization")
-    #X = preprocessing.normalize(X)
+    """if 'bow' in training_type:
+        scaler = MinMaxScaler()
+        X = scaler.fit_transform(X)
+        pickle.dump(scaler,open(normalizers_folder+"/normalizer_"+str(category)+".pkl","wb"))"""
+
+
+    X = preprocessing.normalize(X)
     logging.info("Splitting dataset in train and test")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.10, random_state=42)
     X = None

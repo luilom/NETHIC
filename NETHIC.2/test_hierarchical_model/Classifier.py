@@ -35,11 +35,12 @@ def stemmed_words_tfidf(doc):
 	return (stemmer.stem(w) for w in analyzer(doc))
 
 
-def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries,text_embedded,model_type):
+def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries,normalizers,text_embedded,model_type):
 
 	categories = json.load(open("../categories.json"))
 	if categoryToLoad in categories.keys():
 		dictionary = dictionaries[categoryToLoad]
+		#normalizer = normalizers[categoryToLoad]
 		vectorizer = CountVectorizer(decode_error="replace",stop_words='english',vocabulary=dictionary,analyzer=stemmed_words_count)
 		if "doc2vec" in model_type:
 			X_testGlobal = [np.concatenate((text_embedded,np.array(vectorizer.transform(data_test.data).toarray()[0])),axis = None)]
@@ -48,8 +49,11 @@ def classify(categoryToLoad,data_test,cutoff,neuralNetworks,dictionaries,text_em
 		
 		y_testGlobal = data_test.target
 		"""print("n_samples: %d, n_features: %d" % X_test.shape)"""
-		#X_test = normalize(X_testGlobal)
-		X_test = X_testGlobal
+		
+		logging.info("Dataset normalization")
+		X_test = normalize(X_testGlobal)
+		#X_test = normalizer.transform(X_testGlobal)
+		#X_test = X_testGlobal
 		y_test = y_testGlobal
 
 		""" get features Name from vectorizer """
