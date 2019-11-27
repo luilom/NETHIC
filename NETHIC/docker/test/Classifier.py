@@ -11,48 +11,18 @@ import re
 def stemmed_words_count(doc):
 	stemmer = EnglishStemmer()
 	analyzer = CountVectorizer(stop_words='english').build_analyzer()
-	"""pattern1 = re.compile("(\W+|^)\d+(\W+|$)")
-	pattern2 = re.compile("(\W+|^)\d+\s+")
-	pattern3 = re.compile("(\W+|^)\d+\Z")
-	pattern4 = re.compile("\A\d+(\W+|$)")
-	pattern5 = re.compile("\s+\d+(\W+|$)")
-	doc = pattern1.sub(" ", doc)
-	doc = pattern2.sub(" ", doc)
-	doc = pattern3.sub(" ", doc)
-	doc = pattern4.sub(" ", doc)
-	doc = pattern5.sub(" ", doc)"""
 	pattern = re.compile("\w*\d+\w*")
 	doc = pattern.sub(" ", doc)
 	return (stemmer.stem(w) for w in analyzer(doc))
 
-def __normalizeFeature(dataset):
-	dataset = dataset.astype(float)
-	i = 0
-	j = 0
-	for row in dataset:
-		j = 0
-		size  = row.getnnz()
-		for column in row:
-			if dataset[i,j] != 0:
-				result =  round((round(dataset[i,j],8)/size), 8)
-				dataset[i,j] = round(result,8)
-			j = j + 1
-		i = i + 1
-	return dataset
 
-def classify(categoryToLoad,data_test,cutoff,neuralNetwork,dictionary,categories,featureType):
+def classify(categoryToLoad,data_test,cutoff,neuralNetwork,dictionary,categories):
 
-	
     vectorizer = CountVectorizer(decode_error="replace",stop_words='english',vocabulary=dictionary,analyzer=stemmed_words_count)
 
     X_testGlobal = vectorizer.transform(data_test.data)
-    if featureType == "normalize":
-        X_testGlobal = __normalizeFeature(X_testGlobal)
     X_test = normalize(X_testGlobal)
 
-    """load Neural network"""
-    
-    
     """Classifier"""
     pred = neuralNetwork.predict_proba(X_test)
 
@@ -69,23 +39,23 @@ def classify(categoryToLoad,data_test,cutoff,neuralNetwork,dictionary,categories
     return toReturn
 
 
-def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories,featureType):
+def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories):
     if startCategory in categories.keys():
         clf = neuralNetworks["NN_"+startCategory]
         dictionary = dictionaries["dict_"+startCategory]
-        result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,clf,dictionary,categories,featureType)
+        result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,clf,dictionary,categories)
         if result is not None:
             dictResults[startCategory] = result
             for result in dictResults[startCategory]:
-                recursiveClassification(dictResults[startCategory][result].target,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories,featureType)
+                recursiveClassification(dictResults[startCategory][result].target,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories)
             return dictResults
     return None
 
 
-def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,clf,dictionary,categories,featureType):
+def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,clf,dictionary,categories):
     if int(currLevel) <= int(maxLevel):
         dictScores = dict()
-        categories =  classify(startCategory,data_test,cutoff,clf,dictionary,categories,featureType)
+        categories =  classify(startCategory,data_test,cutoff,clf,dictionary,categories)
         if categories is not None:
             for i in range(len(categories)):
                 dictScores[str(categories[i].target)] = categories[i]
@@ -134,7 +104,7 @@ def computeResultWeighed(category,dictResults,dictScorePath,parents):
 
 
 
-def start(neuralNetworks,dictionaries,newData_test,levels,startCategory,metrics,featureType,path):
+def start(neuralNetworks,dictionaries,newData_test,levels,startCategory,path):
     categories = json.load(open(path+"/categories.json"))
     cutoff = round(0.8, 2)
     maxIter = 4
@@ -144,14 +114,11 @@ def start(neuralNetworks,dictionaries,newData_test,levels,startCategory,metrics,
 
     while maxIter>0 and currentTollerance<tollerance:
         dictResults = dict()
-        dictResults = recursiveClassification(startCategory,0,levels,dictResults,0,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,categories,featureType)
+        dictResults = recursiveClassification(startCategory,0,levels,dictResults,0,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,categories)
         cutoff = cutoff - round(0.1, 2)
         maxIter = maxIter-1
         results = dict()
-        if metrics == "simple":
-            computeResult(startCategory,dictResults,results,[])
-        elif metrics == "weighed":
-            computeResultWeighed(startCategory,dictResults,results,[])
+        computeResult(startCategory,dictResults,results,[])
         sorted_results = sorted(results.items(), key=operator.itemgetter(1),reverse=True)
         currentTollerance = 0
         maxToNormalize = sorted_results[0][1]

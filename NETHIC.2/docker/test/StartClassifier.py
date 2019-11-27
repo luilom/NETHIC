@@ -19,9 +19,11 @@ path = sys.argv[2]
 pathNN = path+'/neural_networks'
 pathDict = path+'/dictionaries'
 pathDoc2Vec = path+'/enwiki_dbow'
+pathNormalizer = path+'/normalizers'
 
 neuralNetworks = dict()
 dictionaries = dict()
+normalizers = dict()
 
 print("Start to load Neural Networks and Dictionaries")
 
@@ -32,6 +34,9 @@ for filename in os.listdir(pathNN):
 """CARICO I DIZIONARI"""
 for filename in os.listdir(pathDict):
     dictionaries[filename.replace(".pkl","")] = joblib.load(pathDict+"/"+filename)
+
+for filename in os.listdir(pathNormalizer):
+    normalizers[filename.replace(".pkl","").replace("normalizer_","")] = joblib.load(pathNormalizer+"/"+filename)
 
 """CARICO DOC2VEC"""
 doc2vec = Doc2Vec.load(pathDoc2Vec+"/doc2vec.bin")
@@ -55,7 +60,7 @@ def classifier():
     dataToTest = Bunch(data=textToSend, filenames="",target="")
     text_embedded = doc2vec.infer_vector(textToSend[0].split())
 
-    categoriesSimple = Classifier.start(neuralNetworks,dictionaries,dataToTest,10,"root",path,text_embedded)
+    categoriesSimple = Classifier.start(neuralNetworks,dictionaries,normalizers,dataToTest,10,"root",path,text_embedded)
 
     json_simple = json.dumps(categoriesSimple)
     body = "{\"simple\":" + json_simple + "}"

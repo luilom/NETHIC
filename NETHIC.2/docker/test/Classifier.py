@@ -7,9 +7,6 @@ from sklearn.preprocessing import normalize
 from nltk.stem.snowball import EnglishStemmer
 import re
 
-
-
-
 def stemmed_words_count(doc):
 	stemmer = EnglishStemmer()
 	analyzer = CountVectorizer(stop_words='english').build_analyzer()
@@ -17,13 +14,15 @@ def stemmed_words_count(doc):
 	doc = pattern.sub(" ", doc)
 	return (stemmer.stem(w) for w in analyzer(doc))
 
-def classify(categoryToLoad, data_test, cutoff, neuralNetworks, dictionaries, categories, text_embedded):
+def classify(categoryToLoad, data_test, cutoff, neuralNetworks, dictionaries, normalizers, categories, text_embedded):
     if categoryToLoad in categories.keys():
         dictionary = dictionaries["dict_" + categoryToLoad]
         vectorizer = CountVectorizer(decode_error="replace", stop_words='english', vocabulary=dictionary, analyzer=stemmed_words_count)
         X_testGlobal = [np.concatenate((text_embedded, np.array(vectorizer.transform(data_test.data).toarray()[0])), axis=None)]
 
         X_test = normalize(X_testGlobal)
+        #normalizer = normalizers[categoryToLoad]
+        #X_test = normalizer.transform(X_testGlobal)
         clf = neuralNetworks["NN_" + categoryToLoad]
         pred = clf.predict_proba(X_test)
         toReturn = []
@@ -39,23 +38,23 @@ def classify(categoryToLoad, data_test, cutoff, neuralNetworks, dictionaries, ca
         return toReturn
 
 
-def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories,text_embedded):
-    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,categories,text_embedded)
+def recursiveClassification(startCategory,count,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,categories,text_embedded):
+    result = recursiveClassificationTask(startCategory,count,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,categories,text_embedded)
     if result is not None:
         dictResults[startCategory] = result
         for result in dictResults[startCategory]:
-            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,categories,text_embedded)
+            recursiveClassification(dictResults[startCategory][result].label,count + 1,maxLevel,dictResults,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,categories,text_embedded)
         return dictResults
     return None
 
 
-def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,categories,text_embedded):
+def recursiveClassificationTask(startCategory,currLevel,maxLevel,i,data_test,cutoff,neuralNetworks,dictionaries,normalizers,categories,text_embedded):
     isRoot = False
     if startCategory == "root":
         isRoot = True
     if int(currLevel) <= int(maxLevel):
         dictScores = dict()
-        categories_result =  classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries,categories,text_embedded)
+        categories_result =  classify(startCategory,data_test,cutoff,neuralNetworks,dictionaries,normalizers,categories,text_embedded)
         if categories_result is not None:
             for i in range(len(categories_result)):
                 dictScores[str(categories_result[i].label)] = categories_result[i]
@@ -84,7 +83,7 @@ def computeResult(category,dictResults,dictScorePath,parents):
 
 
 
-def start(neuralNetworks,dictionaries,newData_test,levels,startCategory,path,textEmbedded):
+def start(neuralNetworks,dictionaries,normalizers,newData_test,levels,startCategory,path,textEmbedded):
     categories = json.load(open(path+"/categories.json"))
     cutoff = round(0.8, 2)
     maxIter = 4
@@ -94,7 +93,7 @@ def start(neuralNetworks,dictionaries,newData_test,levels,startCategory,path,tex
 
     while maxIter>0 and currentTollerance<tollerance:
         dictResults = dict()
-        dictResults = recursiveClassification(startCategory,0,levels,dictResults,0,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,categories,textEmbedded)
+        dictResults = recursiveClassification(startCategory,0,levels,dictResults,0,newData_test,round(cutoff, 2),neuralNetworks,dictionaries,normalizers,categories,textEmbedded)
         cutoff = cutoff - round(0.1, 2)
         maxIter = maxIter-1
         results = dict()

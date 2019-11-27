@@ -1,6 +1,5 @@
 *.txt
 datasets
-
 NETHIC.2/datasetBuilder/datasets
 NETHIC.2/datasetBuilder/datasets_old
 NETHIC.2/datasetBuilder/dictionaries
@@ -16,3 +15,5 @@ NETHIC.2/training_single_NN/results_single_NN_doc2vec/*
 NETHIC.2/training_single_NN/results_single_NN_BOW/*
 NETHIC.2/training_single_NN/neural_networks
 *.pkl
+*.bin
+*.npy
