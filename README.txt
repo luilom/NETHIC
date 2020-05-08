@@ -4,4 +4,4 @@ PAPERS
 
 NETHIC - https://www.researchgate.net/publication/333437000_NETHIC_A_System_for_Automatic_Text_Classification_using_Neural_Networks_and_Hierarchical_Taxonomies 
 
-NETHIC.2 - An Automatic Text Classification Method Based on Hierarchical Taxonomies, Neural Networks and Document Embedding: The NETHIC Tool
+NETHIC.2 - https://link.springer.com/chapter/10.1007/978-3-030-40783-4_4
